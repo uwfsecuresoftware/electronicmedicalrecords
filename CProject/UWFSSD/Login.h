@@ -5,22 +5,25 @@
  */
 
 /* 
- * File:   main.c
+ * File:   Login.h
  * Author: qwex
  *
- * Created on April 12, 2016, 7:29 PM
+ * Created on April 12, 2016, 8:03 PM
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "MainMenu.h"
+#ifndef LOGIN_H
+#define LOGIN_H
 
-/*
- * 
- */
-int main(int argc, char** argv) {
-    
-    displayMainMenu();
-    return (EXIT_SUCCESS);
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* LOGIN_H */
 

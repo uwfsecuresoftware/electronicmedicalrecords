@@ -5,22 +5,27 @@
  */
 
 /* 
- * File:   main.c
+ * File:   MainMenu.h
  * Author: qwex
  *
- * Created on April 12, 2016, 7:29 PM
+ * Created on April 12, 2016, 7:57 PM
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "MainMenu.h"
+#ifndef MAINMENU_H
+#define MAINMENU_H
 
-/*
- * 
- */
-int main(int argc, char** argv) {
-    
-    displayMainMenu();
-    return (EXIT_SUCCESS);
+void displayMainMenu();
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* MAINMENU_H */
 
