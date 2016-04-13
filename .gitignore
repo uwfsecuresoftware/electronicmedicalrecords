@@ -28,3 +28,8 @@
 *.out
 *.app
 emr
+  
+  
+  
+#netbeans files
+CProject/UWFSSD/nbproject/*
