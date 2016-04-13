@@ -14,6 +14,8 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
+int loginUser(char* , char*);
+
 #ifdef __cplusplus
 extern "C" {
 #endif

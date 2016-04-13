@@ -1,6 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This file handles all of the login logic for the project
  */
 
+#include <stdio.h>
+//takes the username and password, checks login file and returns a verdict 
+//
+int loginUser(char* user,char* pass){
+    
+}
