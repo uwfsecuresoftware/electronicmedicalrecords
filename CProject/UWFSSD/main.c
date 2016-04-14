@@ -20,8 +20,14 @@
  */
 int main(int argc, char** argv) {
     
+    char usernameBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
+    char passwordBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
+    
+    fgets(usernameBuffer,20,stdin);
+    fgets(passwordBuffer,20,stdin);
+    
     displayMainMenu();
-    printf("%i",loginUser("asd","asd"));
+    printf("%i",loginUser(usernameBuffer,passwordBuffer));
     return (EXIT_SUCCESS);
 }
 

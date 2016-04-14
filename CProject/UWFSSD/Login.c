@@ -43,8 +43,11 @@ int loginUser(char* user,char* pass){
     temp = head;
     for (count; count>0; count--){
         printf("Usernames found: %s\n",temp->username);
+        printf("compares: %i %i\n",strncmp(user,temp->username,20),
+         strncmp(pass,temp->password,20));
+        //user,pass);
         if(strncmp(user,temp->username,20)==0){
-            if(strncmp(pass,temp->password,20)==0){
+            if(strncmp(user,temp->username,20)==0){
                 return temp->permissionLevel;
             }            
         }
