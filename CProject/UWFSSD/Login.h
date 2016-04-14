@@ -15,6 +15,12 @@
 #define LOGIN_H
 
 int loginUser(char* , char*);
+typedef struct{
+    char username[20];
+    char password[20];
+    int permissionLevel;
+    struct LoginT *next;
+}LoginT;
 
 #ifdef __cplusplus
 extern "C" {

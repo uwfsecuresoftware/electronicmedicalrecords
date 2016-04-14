@@ -21,6 +21,7 @@
 int main(int argc, char** argv) {
     
     displayMainMenu();
+    printf("%i",loginUser("asd","asd"));
     return (EXIT_SUCCESS);
 }
 

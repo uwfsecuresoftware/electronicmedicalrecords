@@ -11,4 +11,5 @@ void displayMainMenu(){
     printf("WELCOME TO THE UWF SSD SECURE MEDICAL RECORDS \n");
     printf("1: do things");
     
+    
 }
