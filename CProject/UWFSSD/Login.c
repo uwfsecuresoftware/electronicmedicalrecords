@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include "Login.h"
+#include "Sanitizer.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -41,7 +42,7 @@ int loginUser(char* user,char* pass){
     FILE *logins = fopen("logins","r");
     LoginT *head = malloc(sizeof(LoginT));
     int count = 0;
-    LoginT *temp;
+    LoginT *temp = malloc(sizeof(LoginT));
     //printf("\nFinding Logins from file!\n");
     while(!feof(logins)){
         LoginT *newElement = malloc(sizeof(LoginT));
@@ -68,7 +69,9 @@ int loginUser(char* user,char* pass){
     }
     // run through and see all the usernames+ pass and cmp
     temp = head;
-    for (count; count>0; count--){
+    
+    //Don't judge this - it keeps the warnings down
+    for (count = count; count>0; count--){
        // printf("Usernames found: %s\n",temp->username);
        // printf("compares: %i %i\n",strncmp(user,temp->username,20),strncmp(pass,temp->password,20));
         //user,pass);
