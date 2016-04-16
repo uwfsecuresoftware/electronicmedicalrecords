@@ -19,14 +19,14 @@ int loginMain(){
     
     while (attempts<MAX_ATTEMPTS){
         attempts++;
-    printf("ENTER USER: ");
-    fgets(usernameBuffer,20,stdin);
-    printf("\nENTER PASSWORD: ");
-    fgets(passwordBuffer,20,stdin);
-    sanitizeInput(usernameBuffer,20);
-    sanitizeInput(passwordBuffer,20);
-    verify=loginUser(usernameBuffer,passwordBuffer);
-    if(verify>0)return verify;
+        printf("ENTER USER: ");
+        fgets(usernameBuffer,20,stdin);
+        printf("\nENTER PASSWORD: ");
+        fgets(passwordBuffer,20,stdin);
+        sanitizeInput(usernameBuffer,20);
+        sanitizeInput(passwordBuffer,20);
+        verify=loginUser(usernameBuffer,passwordBuffer);
+        if(verify>0)return verify;
     }
     //TODO: Lock out
     printf("YOU HAVE LOGGED IN UNSUCCESSFULLY 5 TIMES");
