@@ -14,7 +14,9 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
+int loginMain();
 int loginUser(char* , char*);
+
 typedef struct{
     char username[20];
     char password[20];

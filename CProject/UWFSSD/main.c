@@ -22,15 +22,9 @@
  */
 int main(int argc, char** argv) {
     
-    char usernameBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
-    char passwordBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
+    if(loginMain())
+        displayMainMenu();
     
-    fgets(usernameBuffer,20,stdin);
-    fgets(passwordBuffer,20,stdin);
-    sanitizeInput(usernameBuffer,20);
-    sanitizeInput(passwordBuffer,20);
-    displayMainMenu();
-    printf("%i",loginUser(usernameBuffer,passwordBuffer));
     return (EXIT_SUCCESS);
 }
 
