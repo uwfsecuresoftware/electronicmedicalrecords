@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "MainMenu.h"
+#include "Login.h"
+#include "Sanitizer.h"
 
 /*
  * 
@@ -25,7 +27,8 @@ int main(int argc, char** argv) {
     
     fgets(usernameBuffer,20,stdin);
     fgets(passwordBuffer,20,stdin);
-    
+    sanitizeInput(usernameBuffer,20);
+    sanitizeInput(passwordBuffer,20);
     displayMainMenu();
     printf("%i",loginUser(usernameBuffer,passwordBuffer));
     return (EXIT_SUCCESS);
