@@ -1,0 +1,14 @@
+firstName,lastName,smokesBoolean,race,gender,age,ssn,dateOfBirth
+insuranceCompany,policyNumber
+IMMUNIZATIONS,number
+immunizationName,datePerformed,docUUID
+...
+MEDICATIONS,number
+medName,medDosage,medPerscribingDocUUID
+...
+VISITS,number
+heartRate,bloodPressure,visitDate,docSeenUUID
+...
+TESTRESULT,number
+testName,testResult
+...
