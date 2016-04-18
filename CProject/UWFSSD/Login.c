@@ -102,6 +102,8 @@ int createUser(){
     char uuid[33];
     initializeString(uuid,33);
     generateUUID(uuid);
+    
+    char filePath[50]={'r','e','c','o','r','d','s','/','\0'};
     //printf("THIS IS THE UUID:: %s",uuid);
     
     int numInt = -1;
@@ -120,8 +122,11 @@ int createUser(){
         fgets(num,10,stdin);
         numInt = (int)((num[0]-48));
     }
+    //fprintf(stderr,"\n%s%s",filePath,uuid);
+    strncat(filePath,uuid,33);
+    //printf("%s",filePath);
     
-    FILE *newUUIDFile = fopen(uuid,"w+");
+    FILE *newUUIDFile = fopen(filePath,"w+");
     fclose(newUUIDFile);
     
     FILE *logins = fopen("logins","a");
