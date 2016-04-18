@@ -103,6 +103,7 @@ void displayMainMenu(int level, int remind){
 
 	switch(choice){
 	    case 1://Setup user
+                createUser();
 	    break;
 	    case 2://remove user
 	    break;

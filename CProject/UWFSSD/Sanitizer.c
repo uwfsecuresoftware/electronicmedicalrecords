@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 
-//bounded sanitize, currently removes \n 
+//bounded sanitize, currently removes \n and %
 void sanitizeInput(char* input,int size){
     int i = 0;
     for(i = 0;i<size;i++){
         if(*input =='\n'){
             *input ='\0';
+        }else if(*input=='%'){
+            *input =' ';
         }
         input++;
     }

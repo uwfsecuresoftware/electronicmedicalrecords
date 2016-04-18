@@ -8,6 +8,8 @@
 #include "Sanitizer.h"
 #include <stdlib.h>
 #include <string.h>
+#include "utility.h"
+
 
 int MAX_ATTEMPTS = 5;
 int MAX_BUFF=20;
@@ -53,6 +55,7 @@ int loginUser(char* user,char* pass){
         //printf("got password:%s \n",newElement->password);
         fscanf(logins,"%i",&newElement->permissionLevel);
        // printf("got permissionLevel:%i \n",newElement->permissionLevel);
+        fscanf(logins,"%s",&newElement->uuid);
         
         if(count ==0){
             head = newElement;
@@ -86,4 +89,47 @@ int loginUser(char* user,char* pass){
     
 }
 
+int createUser(){
+    char usernameBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
+    char passwordBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
+    char num[1]={'\0'};
+    int numInt = -1;
+    char uuid[33]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',};
+    generateUUID(uuid);
+    printf("THIS IS THE UUID:: %s",uuid);
+    
 
+    printf("Enter Username: ");
+    //fgets(usernameBuffer,20,stdin);
+    scanf("%s",&usernameBuffer);
+    sanitizeInput(usernameBuffer,20);
+    
+    printf("Enter Password: ");
+    //fgets(passwordBuffer,20,stdin);
+    scanf("%s",&passwordBuffer);
+    sanitizeInput(passwordBuffer,20);
+    
+    while(numInt<0||numInt>5){//verifies that the permission level is valid 0-5
+        printf("Enter Permission level: ");
+        //fgets(num,1,stdin);
+        scanf("%i",&numInt);
+        //numInt = (int)((num[0]-48));
+    }
+    //TODO get UUID 
+    
+    //FILE *newUUIDFile = fopen(uuid,"w+");
+    //fclose(newUUIDFile);
+    
+    FILE *logins = fopen("logins","a");
+    fprintf(logins,"\n%s",usernameBuffer);
+    fprintf(logins," %s",passwordBuffer);
+    fprintf(logins," %i",numInt);
+    fprintf(logins," %s", uuid);
+    fclose(logins);
+    
+    
+    
+    
+    
+    
+}

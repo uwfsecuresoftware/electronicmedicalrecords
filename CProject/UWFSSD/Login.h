@@ -16,11 +16,13 @@
 
 int loginMain();
 int loginUser(char* , char*);
+int createUser();
 
 typedef struct{
     char username[20];
     char password[20];
     int permissionLevel;
+    char uuid[33];
     struct LoginT *next;
 }LoginT;
 

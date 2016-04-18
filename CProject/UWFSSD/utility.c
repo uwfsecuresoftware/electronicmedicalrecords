@@ -1,7 +1,7 @@
 #include "utility.h"
 #include <stdio.h>
 
-void initializeString(char * string, size_t stringSize) {
+void initializeString(char * string, int stringSize) {
 	int i = 0;
 	for(i = 0; i < stringSize; i++) {
 		string[i] = '\0';
@@ -9,10 +9,7 @@ void initializeString(char * string, size_t stringSize) {
 }
 
 void generateUUID(char * uuid) {
-	if(sizeof(uuid) < 33) {
-		uuid = NULL;
-		return;
-	}
+	
 	
 	char data[16];
 	initializeString(data, 16);
