@@ -16,23 +16,26 @@ void displayMainMenu(int level, int remind){
     remind =0;
 
    int choice =0;
-   
+   char temp[2];
 
   do{  
-
+    choice =0;
     printf("WELCOME TO THE UWF SSD SECURE MEDICAL RECORDS \n");
     
     if(level == 1){//nurse
         printf("[1] View personal records\n");
         printf("[2] Edit personal info\n");
-	printf("[9] Exit Menu \n");
+	    printf("[9] Exit Menu \n");
     	
 	if(remind == 0){
         	printf("You have no reminders\n");
     	}else{
         //Reminders funct
     	}
-	scanf(" %d", &choice);
+	    fgets( temp,2,stdin);
+	    choice = temp[0] -48;
+
+	    //scanf(" %d", &choice);
     	switch(choice){
 	    case 1://View pers rec funct
             break;
@@ -50,7 +53,9 @@ void displayMainMenu(int level, int remind){
 	printf("[2] Update Patient records \n");
         printf("[3] Record vitals\n"); 
         printf("[9] Exit menu \n");
-	scanf(" %d", &choice);
+	fgets( temp,2,stdin);
+	choice = temp[0] -48;
+
 
 	switch(choice){
 	    case 1://View patients info
@@ -73,7 +78,8 @@ void displayMainMenu(int level, int remind){
 	printf("[4] Transfer of care \n");
 	printf("[9] Exit menu \n");
 
-	scanf(" %d", &choice);
+	fgets( temp,2,stdin);
+    choice = temp[0] -48;
 
 	switch(choice){
 	    case 1://View patients info
@@ -98,9 +104,10 @@ void displayMainMenu(int level, int remind){
 	printf("[1] Set up new User account \n");
 	printf("[2] Deactivate User account \n");
 	printf("[9] Exit menu \n");
-        scanf(" %d", &choice);
+        fgets( temp , 2 , stdin);
+        choice = temp[0] -48;
 
-
+        
 	switch(choice){
 	    case 1://Setup user
 	    break;
@@ -115,5 +122,7 @@ void displayMainMenu(int level, int remind){
 	}
 
     }
+    
+    scanf("");
   }while(choice != 9);   
 }
