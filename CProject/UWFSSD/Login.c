@@ -88,34 +88,38 @@ int loginUser(char* user,char* pass){
     return 0;
     
 }
-
+//prompts user for account info then generates a UUID and appends to logins file as well as generating a blank UUID file 
 int createUser(){
-    char usernameBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
-    char passwordBuffer[20]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0'};
-    char num[1]={'\0'};
-    int numInt = -1;
-    char uuid[33]={'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',};
-    generateUUID(uuid);
-    printf("THIS IS THE UUID:: %s",uuid);
+    char usernameBuffer[20];
+    initializeString(usernameBuffer,20);
     
-
+    char passwordBuffer[20];
+    initializeString(passwordBuffer,20);
+    
+    char num[10];
+    initializeString(num,10);
+    
+    char uuid[33];
+    initializeString(uuid,33);
+    generateUUID(uuid);
+    //printf("THIS IS THE UUID:: %s",uuid);
+    
+    int numInt = -1;
+   
+    fgets(usernameBuffer,20,stdin);// clears input buffer 
     printf("Enter Username: ");
-    //fgets(usernameBuffer,20,stdin);
-    scanf("%s",&usernameBuffer);
+    fgets(usernameBuffer,20,stdin);
     sanitizeInput(usernameBuffer,20);
     
     printf("Enter Password: ");
-    //fgets(passwordBuffer,20,stdin);
-    scanf("%s",&passwordBuffer);
+    fgets(passwordBuffer,20,stdin);
     sanitizeInput(passwordBuffer,20);
     
     while(numInt<0||numInt>5){//verifies that the permission level is valid 0-5
         printf("Enter Permission level: ");
-        //fgets(num,1,stdin);
-        scanf("%i",&numInt);
-        //numInt = (int)((num[0]-48));
+        fgets(num,10,stdin);
+        numInt = (int)((num[0]-48));
     }
-    //TODO get UUID 
     
     FILE *newUUIDFile = fopen(uuid,"w+");
     fclose(newUUIDFile);
@@ -125,11 +129,5 @@ int createUser(){
     fprintf(logins," %s",passwordBuffer);
     fprintf(logins," %i",numInt);
     fprintf(logins," %s", uuid);
-    fclose(logins);
-    
-    
-    
-    
-    
-    
+    fclose(logins);    
 }
