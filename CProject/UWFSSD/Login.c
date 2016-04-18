@@ -117,8 +117,8 @@ int createUser(){
     }
     //TODO get UUID 
     
-    //FILE *newUUIDFile = fopen(uuid,"w+");
-    //fclose(newUUIDFile);
+    FILE *newUUIDFile = fopen(uuid,"w+");
+    fclose(newUUIDFile);
     
     FILE *logins = fopen("logins","a");
     fprintf(logins,"\n%s",usernameBuffer);
