@@ -17,7 +17,7 @@ typedef struct {
 
 typedef struct {
 	VisitT * item;
-	VisitListT * next;
+	struct VisitListT * next;
 } VisitListT;
 
 //---------------------------------------------------------------------
@@ -30,12 +30,12 @@ typedef struct {
 
 typedef struct {
 	MedicationT * item;
-	MedicationListT * next;
+	struct MedicationListT * next;
 } MedicationListT;
 
 typedef struct {
 	MedicationT * item;
-	AllergyListT * next;
+	struct AllergyListT * next;
 } AllergyListT;
 
 //---------------------------------------------------------------------
@@ -48,7 +48,7 @@ typedef struct {
 
 typedef struct {
 	ImmunizationT * item;
-	ImmunizationListT * next;
+	struct ImmunizationListT * next;
 } ImmunizationListT;
 
 //---------------------------------------------------------------------
@@ -67,7 +67,7 @@ typedef struct {
 
 typedef struct {
 	TestResultT * item;
-	TestResultListT *next;
+	struct TestResultListT *next;
 } TestResultListT;
 
 //---------------------------------------------------------------------
@@ -93,9 +93,9 @@ typedef struct {
 
 typedef struct {
 	PatientT * item;
-	PatientCacheT * next;
+	struct PatientCacheT * next;
 } PatientCacheT;
 
-PatientT fetchPatient(char * uuid);
+PatientT * fetchPatient(char * uuid);
 
 #endif

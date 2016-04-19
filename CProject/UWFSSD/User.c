@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-PatientCacheT * patientCache = NULL
+PatientCacheT * patientCache = NULL;
 
 PatientT * fetchPatient(char * uuid) {
 	if(patientCache == NULL) {
@@ -19,7 +19,7 @@ PatientT * fetchPatient(char * uuid) {
 	}
 	
 	//First we need to search the cache for a proper user
-	PatientCacheT currentRecord = patientCache;
+	PatientCacheT * currentRecord = patientCache;
 	
 	while(true) {
 		if(currentRecord->item == NULL) {
@@ -43,11 +43,18 @@ PatientT * fetchPatient(char * uuid) {
 	char line[500];
 	initializeString(line, 500);
 	//First thing we wanna read in is the basic information about the user
-	fgets(line, 500, userRecords);
+	if(fgets(line, 500, userRecords) == NULL) {
+		//Error during reading
+	}
 	
 	PatientT * patient = malloc(sizeof(PatientT));
 	
+	if(patient == NULL) {
+		//Error during malloc
+	}
+	
 	if(feof(userRecords) && (line[0] == '\0' || line[0] == ' ' || line[1] == '\0')) {
+		fclose(userRecords);
 		return patient;
 	}
 	
@@ -73,10 +80,17 @@ PatientT * fetchPatient(char * uuid) {
 	
 	//-------------------------------------------------------------------------------
 	//Insurance information
-	fgets(line, 500, userRecords);
+	if(fgets(line, 500, userRecords) == NULL) {
+		//Error during reading
+	}
 	parseCSV(line, csvData);
 	
 	InsuranceT * insurance = malloc(sizeof(InsuranceT));
+	
+	if(insurance == NULL) {
+		//Malloc error
+	}
+	
 	strncpy(insurance->name, csvData[0], 40);
 	strncpy(insurance->policyNumber, csvData[1], 30);
 	
@@ -84,7 +98,9 @@ PatientT * fetchPatient(char * uuid) {
 	
 	//--------------------------------------------------------------------------------
 	//Immunization data
-	fgets(line, 500, userRecords);
+	if(fgets(line, 500, userRecords) == NULL) {
+		//Error during reading
+	}
 	parseCSV(line, csvData);
 	
 	int numberOfRecords = (int) strtol(csvData[1], NULL, 10);
@@ -95,18 +111,35 @@ PatientT * fetchPatient(char * uuid) {
 	
 	int i = 0;
 	ImmunizationListT * lastRecordImmu = malloc(sizeof(ImmunizationListT));
+	
+	if(lastRecordImmu == NULL) {
+		//Malloc error
+	}
+	
 	ImmunizationListT * firstRecordImmu = lastRecordImmu;
 	for(i = 0; i < numberOfRecords; i++) {
-		fgets(line, 500, userRecords);
+		if(fgets(line, 500, userRecords) == NULL) {
+			//Error during reading
+		}
 		parseCSV(line, csvData);
 		
 		ImmunizationT * record = malloc(sizeof(ImmunizationT));
+		
+		if(record == NULL) {
+			//Malloc error
+		}
+		
 		strncpy(record->name, csvData[0], 40);
 		strncpy(record->datePerformed, csvData[1], 20);
 		strncpy(record->performingPerson, csvData[2], 33);
 		
 		lastRecordImmu->item = record;
 		lastRecordImmu->next = malloc(sizeof(ImmunizationListT));
+		
+		if(lastRecordImmu->next == NULL) {
+			//Malloc error
+		}
+		
 		lastRecordImmu = lastRecordImmu->next;
 	}
 	
@@ -115,25 +148,39 @@ PatientT * fetchPatient(char * uuid) {
 	
 	//--------------------------------------------------------------------------------
 	//Medication data
-	fgets(line, 500, userRecords);
+	if(fgets(line, 500, userRecords) == NULL) {
+		//Error during reading
+	}
 	parseCSV(line, csvData);
 	
-	int numberOfRecords = (int) strtol(csvData[1], NULL, 10);
+	numberOfRecords = (int) strtol(csvData[1], NULL, 10);
 	if(numberOfRecords == 0) {
 		printf("System errored during Medication import. Ignoring.");
 		numberOfRecords = 0;
 	}
 	
 	MedicationListT * lastRecordMedi = malloc(sizeof(MedicationListT));
+	
+	if(lastRecordMedi == NULL) {
+		//Malloc error
+	}
+	
 	MedicationListT * firstRecordMedi = lastRecordMedi;
 	for(i = 0; i < numberOfRecords; i++) {
-		fgets(line, 500, userRecords);
+		if(fgets(line, 500, userRecords) == NULL) {
+			//Error during reading
+		}
 		parseCSV(line, csvData);
 		
 		MedicationT * record = malloc(sizeof(MedicationT));
+		
+		if(record == NULL) {
+			//Malloc error
+		}
+		
 		strncpy(record->name, csvData[0], 40);
 		
-		int dosage = (int) strtol(csvData[1], NULL, 10);
+		const int dosage = (int) strtol(csvData[1], NULL, 10);
 		if(dosage == 0) {
 			printf("System error during Medication import.");
 			record->dosage = -1;
@@ -145,6 +192,11 @@ PatientT * fetchPatient(char * uuid) {
 		
 		lastRecordMedi->item = record;
 		lastRecordMedi->next = malloc(sizeof(MedicationListT));
+		
+		if(lastRecordMedi->next == NULL) {
+			//Malloc error
+		}
+		
 		lastRecordMedi = lastRecordMedi->next;
 	}
 	
@@ -152,25 +204,38 @@ PatientT * fetchPatient(char * uuid) {
 	
 	//---------------------------------------------------------------------------------
 	//Visits data
-	fgets(line, 500, userRecords);
+	if(fgets(line, 500, userRecords) == NULL) {
+		//Error during reading
+	}
 	parseCSV(line, csvData);
 	
-	int numberOfRecords = (int) strtol(csvData[1], NULL, 10);
+	numberOfRecords = (int) strtol(csvData[1], NULL, 10);
 	if(numberOfRecords == 0) {
 		printf("System error during Visits import. Ignoring.");
 		numberOfRecords = 0;
 	}
 	
 	VisitListT * lastVisitRecord = malloc(sizeof(VisitListT));
+	
+	if(lastVisitRecord == NULL) {
+		//Malloc error
+	}
+	
 	VisitListT * firstVisitRecord = lastVisitRecord;
 	
 	for(i = 0; i < numberOfRecords; i++) {
-		fgets(line, 500, userRecords);
+		if(fgets(line, 500, userRecords) == NULL) {
+			//Error during reading
+		}
 		parseCSV(line, csvData);
 		
 		VisitT * record = malloc(sizeof(VisitT));
 		
-		int heartRate = (int) strtol(csvData[0], NULL, 10);
+		if(record == NULL) {
+			//Malloc error
+		}
+		
+		const int heartRate = (int) strtol(csvData[0], NULL, 10);
 		if(heartRate == 0) {
 			printf("System error during Visit import");
 			record->heartRate = -1;
@@ -179,7 +244,7 @@ PatientT * fetchPatient(char * uuid) {
 			record->heartRate = heartRate;
 		}
 		
-		int bloodPressure = (int) strtol(csvData[1], NULL, 10);
+		const int bloodPressure = (int) strtol(csvData[1], NULL, 10);
 		if(bloodPressure == 0) {
 			printf("System error during Visit import");
 			record->bloodPressure = -1;
@@ -191,8 +256,13 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->visitDateTime, csvData[2], 19);
 		strncpy(record->personSeen, csvData[3], 33);
 		
-		listVisitRecord->item = record;
+		lastVisitRecord->item = record;
 		lastVisitRecord->next = malloc(sizeof(VisitT));
+		
+		if(lastVisitRecord->next == NULL) {
+			//Malloc error
+		}
+		
 		lastVisitRecord = lastVisitRecord->next;
 	}
 	
@@ -201,29 +271,47 @@ PatientT * fetchPatient(char * uuid) {
 	//---------------------------------------------------------------------------------
 	//Test Result data
 	
-	fgets(line, 500, userRecords);
+	if(fgets(line, 500, userRecords) == NULL) {
+		//Error during reading
+	}
 	parseCSV(line, csvData);
 	
-	int numberOfRecords = (int) strtol(csvData[1], NULL, 10);
+	numberOfRecords = (int) strtol(csvData[1], NULL, 10);
 	if(numberOfRecords == 0) {
 		printf("System error during Test Results import. Ignoring.");
 		numberOfRecords = 0;
 	}
 	
 	TestResultListT * lastTestRecord = malloc(sizeof(TestResultListT));
+	
+	if(lastTestRecord == NULL) {
+		//Malloc error;
+	}
+	
 	TestResultListT * firstTestRecord = lastTestRecord;
 	
 	for(i = 0; i < numberOfRecords; i++) {
-		fgets(line, 500, userRecords);
+		if(fgets(line, 500, userRecords) == NULL) {
+			//Error during reading
+		}
 		parseCSV(line, csvData);
 		
 		TestResultT * record = malloc(sizeof(TestResultT));
+		
+		if(record == NULL) {
+			//Malloc error
+		}
 		
 		strncpy(record->testName, csvData[0], 30);
 		strncpy(record->testResults, csvData[1], 120);
 		
 		lastTestRecord->item = record;
 		lastTestRecord->next = malloc(sizeof(TestResultT));
+		
+		if(lastTestRecord->next == NULL) {
+			//Malloc error;
+		}
+		
 		lastTestRecord = lastTestRecord->next;
 	}
 	
@@ -231,7 +319,13 @@ PatientT * fetchPatient(char * uuid) {
 	
 	//I think we're done here.
 	patientCache->item = patient;
-	paatientCache->next = malloc(sizeof(PatientCacheT));
+	patientCache->next = malloc(sizeof(PatientCacheT));
+	
+	if(patientCache->next == NULL) {
+		//Error;
+	}
+	
+	fclose(userRecords);
 	
 	return patient;
 }

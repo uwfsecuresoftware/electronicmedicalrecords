@@ -18,7 +18,7 @@ int loginMain();
 int loginUser(char* , char*);
 int createUser();
 int deleteUser();
-int lockout(char*);
+void lockout(char*);
 int unlock(char*);
 int isLocked(char *);
 
