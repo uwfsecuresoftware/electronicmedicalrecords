@@ -79,14 +79,15 @@ int loginUser(char* user, char* pass) {
         
         errno = 0;
         
-        if(fscanf(logins, "%i", newElement->permissionLevel) == 0) {
-            //Error happpened during reading
-        }
-        else if(ERANGE == errno) {
+        char number[2] = {'\0', '\0'};
+        if(fgets(number, 2, logins) == NULL) {
             //Error
         }
+        
+        newElement->permissionLevel = (int) strtol(number, NULL, 10);
+
         // printf("got permissionLevel:%i \n",newElement->permissionLevel);
-        if(fscanf(logins, "%32s ", &newElement->uuid) == 0) {
+        if(fscanf(logins, "%32s ", newElement->uuid) == 0) {
             //Error happened during reading
         }
 
@@ -252,8 +253,8 @@ int unlock(char* user) {
         fprintf(stderr, "%i-> %s", count, temp->username);
         if (temp->next != 0) {
             if (count == 0)
-                fprintf(lockout, "%s", temp->username);
-            fprintf(lockout, "\n%s", temp->username);
+                fprintf(lockoutFile, "%s", temp->username);
+            fprintf(lockoutFile, "\n%s", temp->username);
             temp = temp->next;
         }
 
@@ -358,9 +359,13 @@ int deleteUser() {
         }
         printf("got password:%s \n", newElement->password);
         
-        if(fscanf(logins, "%i", &newElement->permissionLevel) == 0) {
+        char number[2] = {'\0', '\0'};
+        if(fgets(number, 2, logins) == NULL) {
             //Error
         }
+        
+        newElement->permissionLevel = (int) strtol(number, NULL, 10);
+        
         printf("got permissionLevel:%i \n", newElement->permissionLevel);
         
         if(fscanf(logins, "%19s", &newElement->uuid) == 0) {
@@ -396,7 +401,6 @@ int deleteUser() {
                 fprintf(stderr, "\nFOUND!!! %s", temp->username);
                 prev->next = temp->next;
                 numRmv++;
-                free(temp);
                 temp = prev->next;
             }
             else {
