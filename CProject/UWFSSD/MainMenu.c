@@ -103,6 +103,7 @@ void displayMainMenu(int level, int remind){
 
 	printf("[1] Set up new User account \n");
 	printf("[2] Deactivate User account \n");
+        printf("[3] Unlock User account\n");
 	printf("[9] Exit menu \n");
         fgets( temp , 2 , stdin);
         choice = temp[0] -48;
@@ -113,6 +114,7 @@ void displayMainMenu(int level, int remind){
                 createUser();
 	    break;
 	    case 2://remove user
+                deleteUser();
 	    break;
 	    case 9:
 	        printf("Exiting menu \n");

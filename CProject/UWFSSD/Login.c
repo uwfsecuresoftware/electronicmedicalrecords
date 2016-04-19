@@ -31,7 +31,8 @@ int loginMain(){
         verify=loginUser(usernameBuffer,passwordBuffer);
         if(verify>0)return verify;
     }
-    //TODO: Lock out
+    //Lock out
+    lockout(usernameBuffer);
     printf("YOU HAVE LOGGED IN UNSUCCESSFULLY 5 TIMES");
     return verify;
 }
@@ -80,7 +81,10 @@ int loginUser(char* user,char* pass){
         //user,pass);
         if(strncmp(user,temp->username,20)==0){
             if(strncmp(pass,temp->password,20)==0){
-                return temp->permissionLevel;
+                if(isLocked(user)<0){
+                    return temp->permissionLevel;
+                }
+                
             }            
         }
         temp=temp->next;        
@@ -120,6 +124,7 @@ int createUser(){
     while(numInt<0||numInt>5){//verifies that the permission level is valid 0-5
         printf("Enter Permission level: ");
         fgets(num,10,stdin);
+        sanitizeInput(num,1);
         numInt = (int)((num[0]-48));
     }
     //fprintf(stderr,"\n%s%s",filePath,uuid);
@@ -135,4 +140,95 @@ int createUser(){
     fprintf(logins," %i",numInt);
     fprintf(logins," %s", uuid);
     fclose(logins);    
+}
+//lockouts selected user by adding them to locokout file
+int lockout(char* user){
+    FILE *lockout = fopen("lockout","a");
+    fprintf(lockout,"\n%s",user);
+    fclose(lockout);
+}
+//reads locokut file and removes from linked list
+int unlock(char* user){
+    FILE *lockout = fopen("lockout","r");
+    lockOutT *head = malloc(sizeof(lockOutT));
+    lockOutT *temp = malloc(sizeof(lockOutT));
+    lockOutT *newElement = malloc(sizeof(lockOutT));
+    lockOutT *prev = malloc(sizeof(lockOutT));
+    int count = 0;
+    int saveCount=0;
+    
+    while(!feof(lockout)){
+        newElement = malloc(sizeof(lockOutT));
+        newElement->next= 0;
+        fscanf(lockout,"%s",newElement->username);
+        if(count ==0){
+            head = newElement;
+            temp = head;
+        }
+        else {
+            temp->next = newElement;
+            temp = newElement;
+        }
+        count++;
+    }
+    saveCount=count;
+    for (count = count; count>0; count--){
+        if(strncmp(user,temp->username,20)==0){
+            prev->next=temp->next;
+        }
+        prev= temp;
+        temp=temp->next;
+    }
+    fclose(lockout);
+    temp=head;
+    lockout = fopen("lockout","w");
+    for(count=count;count<=saveCount;count++){
+        fprintf(lockout,"%s",temp->username);
+        temp=temp->next;
+    }
+}
+//checks if the username is inside lockout -100 if not 100 if
+int isLocked(char* user){
+    
+    FILE *lockout = fopen("lockout","r");
+    lockOutT *head = malloc(sizeof(lockOutT));
+    lockOutT *temp = malloc(sizeof(lockOutT));
+    lockOutT *newElement = malloc(sizeof(lockOutT));
+    lockOutT *prev = malloc(sizeof(lockOutT));
+    int count = 0;
+    int saveCount=0;
+     //fprintf(stderr,"initVars");
+    
+    while(!feof(lockout)){
+        newElement = malloc(sizeof(lockOutT));
+        newElement->next= 0;
+        fscanf(lockout,"%s",newElement->username);
+        //fprintf(stderr,"\n Locked Out user: %s",newElement->username);
+        if(count ==0){
+            head = newElement;
+            temp = head;
+        }
+        else {
+            temp->next = newElement;
+            temp = newElement;
+        }
+        count++;
+    }
+    saveCount=count;
+    temp=head;
+    for (count = count; count>0; count--){
+        //fprintf(stderr,"\n Locked Out user: %s",temp->username);
+        if(strncmp(user,temp->username,20)==0){
+            return 100;
+        }
+        prev= temp;
+        temp=temp->next;
+    }
+    fclose(lockout);
+    return -100;
+    
+}
+//prompts and deletes user
+int deleteUser(){
+    
 }

@@ -17,6 +17,10 @@
 int loginMain();
 int loginUser(char* , char*);
 int createUser();
+int deleteUser();
+int lockout(char*);
+int unlock(char*);
+int isLocked(char *);
 
 typedef struct{
     char username[20];
@@ -25,6 +29,10 @@ typedef struct{
     char uuid[33];
     struct LoginT *next;
 }LoginT;
+typedef struct {
+    char username[20];
+    struct lockOutT *next;
+}lockOutT;
 
 #ifdef __cplusplus
 extern "C" {
