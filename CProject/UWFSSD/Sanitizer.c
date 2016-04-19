@@ -17,3 +17,14 @@ void sanitizeInput(char* input,int size){
     }
     
 }
+
+void sanitizeSpace(char* input,int size){
+    int i = 0;
+    for(i = 0;i<size;i++){
+        if(*input ==' '){
+            *input ='_';
+        }
+        input++;
+    }
+    
+}

@@ -17,6 +17,7 @@ void displayMainMenu(int level, int remind){
 
    int choice =0;
    char temp[2];
+   char usernameBuffer[20];
 
   do{  
     choice =0;
@@ -116,6 +117,13 @@ void displayMainMenu(int level, int remind){
 	    case 2://remove user
                 deleteUser();
 	    break;
+            case 3:
+                while(getchar()!='\n');// clean out buffer
+                initializeString(usernameBuffer,20);
+                fgets(usernameBuffer,20,stdin);
+                sanitizeInput(usernameBuffer);
+                unlock(usernameBuffer);
+                break;
 	    case 9:
 	        printf("Exiting menu \n");
 		break;
