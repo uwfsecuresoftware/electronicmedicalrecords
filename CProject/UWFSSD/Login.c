@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utility.h"
+#include <errno.h>
 
 
 int MAX_ATTEMPTS = 5;
@@ -22,12 +23,20 @@ int loginMain() {
     char passwordBuffer[20] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
 
     printf("ENTER USER: ");
-    fgets(usernameBuffer, 20, stdin);
+    
+    if(fgets(usernameBuffer, 20, stdin) == NULL) {
+        //Something happened.
+    }
+    
     sanitizeInput(usernameBuffer, 20);
     while (attempts < MAX_ATTEMPTS) {
         attempts++;
         printf("\nENTER PASSWORD: ");
-        fgets(passwordBuffer, 20, stdin);
+        
+        if(fgets(passwordBuffer, 20, stdin) == NULL) {
+            //Something happened
+        }
+        
         sanitizeInput(passwordBuffer, 20);
         verify = loginUser(usernameBuffer, passwordBuffer);
         if (verify > 0)return verify;
@@ -48,17 +57,38 @@ int loginUser(char* user, char* pass) {
     LoginT *head = malloc(sizeof (LoginT));
     int count = 0;
     LoginT *temp = malloc(sizeof (LoginT));
+    if(temp == NULL) {
+        //Bad malloc
+    }
     //printf("\nFinding Logins from file!\n");
     while (!feof(logins)) {
         LoginT *newElement = malloc(sizeof (LoginT));
+        if(newElement == NULL) {
+            //Bad malloc
+        }
         newElement->next = 0;
-        fscanf(logins, "%s", newElement->username);
+        
+        if(fscanf(logins, "%19s ", newElement->username) == 0) {
+            //Error happened during reading
+        }
         //printf("got username:%s \n",newElement->username);
-        fscanf(logins, "%s", newElement->password);
+        if(fscanf(logins, "%19s ", newElement->password) == 0) {
+            //Error happened during reading;
+        }
         //printf("got password:%s \n",newElement->password);
-        fscanf(logins, "%i", &newElement->permissionLevel);
+        
+        errno = 0;
+        
+        if(fscanf(logins, "%i", newElement->permissionLevel) == 0) {
+            //Error happpened during reading
+        }
+        else if(ERANGE == errno) {
+            //Error
+        }
         // printf("got permissionLevel:%i \n",newElement->permissionLevel);
-        fscanf(logins, "%s", &newElement->uuid);
+        if(fscanf(logins, "%32s ", &newElement->uuid) == 0) {
+            //Error happened during reading
+        }
 
         if (count == 0) {
             head = newElement;
@@ -72,6 +102,7 @@ int loginUser(char* user, char* pass) {
         count++;
 
     }
+    fclose(logins);
     // run through and see all the usernames+ pass and cmp
     temp = head;
 
@@ -114,20 +145,30 @@ int createUser() {
 
     int numInt = -1;
 
-    fgets(usernameBuffer, 20, stdin); // clears input buffer 
+    if(fgets(usernameBuffer, 20, stdin) == NULL) { // clears input buffer 
+        //error
+    } 
     printf("Enter Username: ");
-    fgets(usernameBuffer, 20, stdin);
+    
+    if(fgets(usernameBuffer, 20, stdin) == NULL) {
+        //error
+    }
     sanitizeInput(usernameBuffer, 20);
     sanitizeSpace(usernameBuffer, 20);
 
     printf("Enter Password: ");
-    fgets(passwordBuffer, 20, stdin);
+    
+    if(fgets(passwordBuffer, 20, stdin) == NULL) {
+        //error
+    }
     sanitizeInput(passwordBuffer, 20);
     sanitizeSpace(passwordBuffer, 20);
 
     while (numInt < 0 || numInt > 5) {//verifies that the permission level is valid 0-5
         printf("Enter Permission level: ");
-        fgets(num, 10, stdin);
+        if(fgets(num, 10, stdin) == NULL) {
+            //error
+        }
         sanitizeInput(num, 1);
         numInt = (int) ((num[0] - 48));
     }
@@ -147,26 +188,37 @@ int createUser() {
 }
 //lockouts selected user by adding them to locokout file
 
-int lockout(char* user) {
-    FILE *lockout = fopen("lockout", "a");
-    fprintf(lockout, "\n%s", user);
-    fclose(lockout);
+void lockout(char* user) {
+    FILE *lockoutFile = fopen("lockout", "a");
+    fprintf(lockoutFile, "\n%s", user);
+    fclose(lockoutFile);
 }
 //reads locokut file and removes from linked list
 
 int unlock(char* user) {
-    FILE *lockout = fopen("lockout", "r");
+    FILE *lockoutFile = fopen("lockout", "r");
+    
     lockOutT *head = malloc(sizeof (lockOutT));
     lockOutT *temp = malloc(sizeof (lockOutT));
     lockOutT *newElement = malloc(sizeof (lockOutT));
     lockOutT *prev = malloc(sizeof (lockOutT));
+    
+    if(head == NULL || temp == NULL || newElement == NULL || prev == NULL) {
+        //Malloc error
+    }
     int count = 0;
     int saveCount = 0;
     fprintf(stderr, "inivar \n");
-    while (!feof(lockout)) {
+    while (!feof(lockoutFile)) {
         newElement = malloc(sizeof (lockOutT));
+        
+        if(newElement == NULL) {
+            //Malloc error
+        }
         newElement->next = 0;
-        fscanf(lockout, "%s", newElement->username);
+        if(fscanf(lockoutFile, "%19s", newElement->username) == 0) {
+            //Read error
+        }
         fprintf(stderr, "found: %s", newElement->username);
         if (count == 0) {
             head = newElement;
@@ -193,9 +245,9 @@ int unlock(char* user) {
         if (temp->next != 0)
             temp = temp->next;
     }
-    fclose(lockout);
+    fclose(lockoutFile);
     temp = head;
-    lockout = fopen("lockout", "w");
+    lockoutFile = fopen("lockout", "w");
     for (count = count; count <= saveCount; count++) {
         fprintf(stderr, "%i-> %s", count, temp->username);
         if (temp->next != 0) {
@@ -206,25 +258,36 @@ int unlock(char* user) {
         }
 
     }
-    fclose(lockout);
+    fclose(lockoutFile);
 }
 //checks if the username is inside lockout -100 if not 100 if
 
 int isLocked(char* user) {
 
-    FILE *lockout = fopen("lockout", "r");
+    FILE *lockoutFile = fopen("lockout", "r");
     lockOutT *head = malloc(sizeof (lockOutT));
     lockOutT *temp = malloc(sizeof (lockOutT));
     lockOutT *newElement = malloc(sizeof (lockOutT));
     lockOutT *prev = malloc(sizeof (lockOutT));
+    
+    if(head == NULL || temp == NULL || newElement == NULL || prev == NULL) {
+        //Malloc error
+    }
+    
     int count = 0;
     int saveCount = 0;
     //fprintf(stderr,"initVars");
 
     while (!feof(lockout)) {
         newElement = malloc(sizeof (lockOutT));
+        
+        if(newElement == NULL) {
+            //Malloc error
+        }
         newElement->next = 0;
-        fscanf(lockout, "%s", newElement->username);
+        if(fscanf(lockoutFile, "%19s", newElement->username) == 0) {
+            //Error
+        }
         //fprintf(stderr,"\n Locked Out user: %s",newElement->username);
         if (count == 0) {
             head = newElement;
@@ -245,7 +308,7 @@ int isLocked(char* user) {
         prev = temp;
         temp = temp->next;
     }
-    fclose(lockout);
+    fclose(lockoutFile);
     return -100;
 
 }
@@ -257,6 +320,10 @@ int deleteUser() {
     LoginT *temp = malloc(sizeof (LoginT));
     LoginT *newElement = malloc(sizeof (LoginT));
     LoginT *prev = malloc(sizeof (LoginT));
+    
+    if(head == NULL || temp == NULL || newElement == NULL || prev == NULL) {
+        //Malloc error
+    }
     int count = 0;
     int saveCount = 0;
     int numRmv = 0;
@@ -265,21 +332,40 @@ int deleteUser() {
 
     while (getchar() != '\n'); // clean out buffer
     printf("ENTER USER: ");
-    fgets(usernameBuffer, 20, stdin);
+    
+    if(fgets(usernameBuffer, 20, stdin) == NULL) {
+        //Error
+    }
     sanitizeInput(usernameBuffer, 20);
 
 
 
     while (!feof(logins)) {
         newElement = malloc(sizeof (LoginT));
+        
+        if(newElement == NULL) {
+            //Error
+        }
         newElement->next = 0;
-        fscanf(logins, "%s", newElement->username);
+        
+        if(fscanf(logins, "%19s", newElement->username) == 0) {
+            //Error
+        }
         printf("got username:%s \n", newElement->username);
-        fscanf(logins, "%s", newElement->password);
+        
+        if(fscanf(logins, "%19s", newElement->password) == 0) {
+            //Error
+        }
         printf("got password:%s \n", newElement->password);
-        fscanf(logins, "%i", &newElement->permissionLevel);
+        
+        if(fscanf(logins, "%i", &newElement->permissionLevel) == 0) {
+            //Error
+        }
         printf("got permissionLevel:%i \n", newElement->permissionLevel);
-        fscanf(logins, "%s", &newElement->uuid);
+        
+        if(fscanf(logins, "%19s", &newElement->uuid) == 0) {
+            //Error
+        }
         printf("got puuid:%s \n", newElement->uuid);
 
 
@@ -311,9 +397,12 @@ int deleteUser() {
                 prev->next = temp->next;
                 numRmv++;
                 free(temp);
+                temp = NULL;
             }
-            prev = temp;
-            temp = temp->next;
+            else {
+                prev = temp;
+                temp = temp->next;
+            }
         }
     }
     //temp->next=0;
