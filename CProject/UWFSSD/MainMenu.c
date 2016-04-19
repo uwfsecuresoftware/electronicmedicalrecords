@@ -33,7 +33,9 @@ void displayMainMenu(int level, int remind){
     	}else{
         //Reminders funct
     	}
-	    fgets( temp,2,stdin);
+
+	if(fgets( temp,2,stdin) == NULL){};
+
 	    choice = temp[0] -48;
 
 	    //scanf(" %d", &choice);
@@ -54,7 +56,7 @@ void displayMainMenu(int level, int remind){
 	printf("[2] Update Patient records \n");
         printf("[3] Record vitals\n"); 
         printf("[9] Exit menu \n");
-	fgets( temp,2,stdin);
+	if(fgets( temp,2,stdin) == NULL){};
 	choice = temp[0] -48;
 
 
@@ -79,7 +81,7 @@ void displayMainMenu(int level, int remind){
 	printf("[4] Transfer of care \n");
 	printf("[9] Exit menu \n");
 
-	fgets( temp,2,stdin);
+	if(fgets( temp,2,stdin) == NULL){};
     choice = temp[0] -48;
 
 	switch(choice){
@@ -106,23 +108,23 @@ void displayMainMenu(int level, int remind){
 	printf("[2] Deactivate User account \n");
         printf("[3] Unlock User account\n");
 	printf("[9] Exit menu \n");
-        fgets( temp , 2 , stdin);
+        if(fgets( temp,2,stdin) == NULL){};
         choice = temp[0] -48;
 
         
 	switch(choice){
 	    case 1://Setup user
-                createUser();
+                if(createUser()){};
 	    break;
 	    case 2://remove user
-                deleteUser();
+                if(deleteUser()){};
 	    break;
             case 3:
                 while(getchar()!='\n');// clean out buffer
-                initializeString(usernameBuffer,20);
-                fgets(usernameBuffer,20,stdin);
-                sanitizeInput(usernameBuffer);
-                unlock(usernameBuffer);
+                if(initializeString(usernameBuffer,20)){};
+                if(fgets(usernameBuffer,20,stdin)){};
+                if(sanitizeInput(usernameBuffer)){};
+                if(unlock(usernameBuffer)){};
                 break;
 	    case 9:
 	        printf("Exiting menu \n");
@@ -134,6 +136,6 @@ void displayMainMenu(int level, int remind){
 
     }
     
-    scanf("");
+    if(scanf("")){};
   }while(choice != 9);   
 }
