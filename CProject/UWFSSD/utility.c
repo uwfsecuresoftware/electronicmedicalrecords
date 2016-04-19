@@ -16,7 +16,9 @@ void generateUUID(char * uuid) {
 	
 	FILE *fp;
 	fp = fopen("/dev/urandom", "r");
-	fread(&data, 1, 16, fp);
+	if(fread(&data, 1, 16, fp) != 16) {
+		//Reading error
+	}
 	fclose(fp);
 	
 	char buffer[3];
@@ -42,11 +44,10 @@ int getSizeOfString(char * string, int maxLength) {
 
 void parseCSV(char * line, char ** csvData) {
 	char buffer[50];
-	char charBuffer;
 	
 	initializeString(buffer, 50);
 	
-	int maxLength = sizeof(line);
+	const int maxLength = strnlen(line, 500);
 	int i = 0;
 	int currentField = 0;
 	
@@ -58,7 +59,9 @@ void parseCSV(char * line, char ** csvData) {
 			currentField++;
 			continue;
 		}
-		strncat(buffer, line[i], 1);
+		if(i >= 0 && i < maxLength) {
+			strncat(buffer, line[i], 1);
+		}
 	}
 }
 
@@ -95,7 +98,6 @@ long convertToTimestamp(int month, int day, int year, int hours, int minutes, in
 		timestamp += ((((year - 1972) - ((year - 1972) % 4)) / 4) + 1) * 86400;
 	}
 	
-	int currentYearSeconds = 0;
 	int i = 0;
 	for(i = 0; i < month; i++) {
 		if(i = month - 1) {
@@ -125,6 +127,8 @@ long convertToTimestamp(int month, int day, int year, int hours, int minutes, in
 				else {
 					timestamp += 28 * 86400;
 				}
+				break;
+			default:
 				break;
 		}
 	}

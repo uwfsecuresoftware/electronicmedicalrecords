@@ -397,7 +397,7 @@ int deleteUser() {
                 prev->next = temp->next;
                 numRmv++;
                 free(temp);
-                temp = NULL;
+                temp = prev->next;
             }
             else {
                 prev = temp;
