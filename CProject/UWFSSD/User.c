@@ -380,7 +380,7 @@ void displayMed(MedicationListT * list){
 		if(i!=NULL){
 			printf("\nMed: %40s",i->name);
 			printf("\n\tDosage: %20s",i->dosage);
-			printf("\n\tBy: %33s",i->perscribingPerson);
+			printf("\n\tBy: %33s",i->prescribingPerson);
 		}
 	}
 	temp= temp->next;
