@@ -27,8 +27,8 @@ typedef struct {
 }lockOutT;
 
 
-struct LoginT loginMain();
-struct LoginT loginUser(char* , char*);
+struct LoginT* loginMain();
+struct LoginT* loginUser(char* , char*);
 int createUser();
 int deleteUser();
 void lockout(char*);
