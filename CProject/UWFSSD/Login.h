@@ -14,8 +14,8 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-int loginMain();
-int loginUser(char* , char*);
+LoginT loginMain();
+LoginT loginUser(char* , char*);
 int createUser();
 int deleteUser();
 void lockout(char*);
