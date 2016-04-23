@@ -99,7 +99,7 @@ struct LoginT* loginUser(char* user, char* pass) {
             temp = newElement;
         }
         //temp = newElement->next;
-        //printf("%i: %s, %s, %i\n",count,newElement->username,newElement->password,newElement->permissionLevel);
+        printf("%i: %s, %s, %i\n",count,newElement->username,newElement->password,newElement->permissionLevel);
         count++;
 
     }
@@ -109,8 +109,8 @@ struct LoginT* loginUser(char* user, char* pass) {
 
     //Don't judge this - it keeps the warnings down
     for (count = count; count > 0; count--) {
-        // printf("Usernames found: %s\n",temp->username);
-        // printf("compares: %i %i\n",strncmp(user,temp->username,20),strncmp(pass,temp->password,20));
+         printf("Usernames found: %s\n",temp->username);
+         printf("compares: %i %i\n",strncmp(user,temp->username,20),strncmp(pass,temp->password,20));
         //user,pass);
         if (strncmp(user, temp->username, 20) == 0) {
             if (strncmp(pass, temp->password, 20) == 0) {
