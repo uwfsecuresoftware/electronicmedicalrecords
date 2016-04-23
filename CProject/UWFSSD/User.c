@@ -341,7 +341,7 @@ void displayPatient(char* uuid){
 		printf("\n\tDOB: %11s",patient.dateOfBirth);
 		printf("\n\tSSN: %9s",patient.ssn);
 		printf("\n\tAGE: %i",patient.age);
-		if(smokes){
+		if(patient.smokes){
 			printf("\nSMOKES");
 		}else{
 			printf("\nnon-smoker");
