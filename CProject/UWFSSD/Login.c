@@ -115,6 +115,7 @@ struct LoginT* loginUser(char* user, char* pass) {
         if (strncmp(user, temp->username, 20) == 0) {
             if (strncmp(pass, temp->password, 20) == 0) {
                 if (isLocked(user) < 0) {
+                    fprintf(stderr,"returning");
                     return temp;
                 }
 
