@@ -22,9 +22,11 @@
  */
 int main(int argc, char** argv) {
     LoginT * login = loginMain();
-    
-   if(login!=NULL)
-        displayMainMenu(login->permissionLevel,0,login->username,login->uuid);
+    printf("%s",login->username);
+   if(login!=NULL){
+       displayMainMenu(login->permissionLevel,0,login->username,login->uuid);
+   }
+       
     
     return (EXIT_SUCCESS);
 }
