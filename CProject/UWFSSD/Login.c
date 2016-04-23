@@ -16,7 +16,7 @@ int MAX_ATTEMPTS = 5;
 int MAX_BUFF = 20;
 //handles the login logic for lock out and attempts/ uses loginUser()
 
-LoginT loginMain() {
+LoginT* loginMain() {
     int attempts = 0;
     LoginT verify=NULL;
     char usernameBuffer[20] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
@@ -51,7 +51,7 @@ LoginT loginMain() {
 //takes the username and password, checks login file and returns a verdict 
 //Returns: permission level of the auth user, 0 if no login 
 
-LoginT loginUser(char* user, char* pass) {
+LoginT* loginUser(char* user, char* pass) {
 
     FILE *logins = fopen("logins", "r");
     LoginT *head = malloc(sizeof (LoginT));
