@@ -18,7 +18,7 @@ int MAX_BUFF = 20;
 
 struct LoginT* loginMain() {
     int attempts = 0;
-    LoginT verify=NULL;
+    LoginT* verify=NULL;
     char usernameBuffer[20] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
     char passwordBuffer[20] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
 
