@@ -280,7 +280,7 @@ int isLocked(char* user) {
     int saveCount = 0;
     //fprintf(stderr,"initVars");
 
-    while (!feof(lockout)) {
+    while (!feof(lockoutFile)) {
         newElement = malloc(sizeof (lockOutT));
         
         if(newElement == NULL) {
