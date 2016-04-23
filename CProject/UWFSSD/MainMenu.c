@@ -23,7 +23,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
     choice =0;
     printf("WELCOME TO THE UWF SSD SECURE MEDICAL RECORDS \n");
     
-    if(level == 1){//nurse
+    if(level == 1){//patient
         printf("[1] View personal records\n");
         printf("[2] Edit personal info\n");
 	    printf("[9] Exit Menu \n");
@@ -41,6 +41,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	    //scanf(" %d", &choice);
     	switch(choice){
 	    case 1://View pers rec funct
+			displayPatient(uuid);
             break;
             case 2://Edit personal info funct
             break;

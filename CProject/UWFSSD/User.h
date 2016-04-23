@@ -97,5 +97,6 @@ typedef struct {
 } PatientCacheT;
 
 PatientT * fetchPatient(char * uuid);
+void displayPatient(char *);
 
 #endif
