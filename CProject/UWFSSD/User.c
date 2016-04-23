@@ -386,7 +386,7 @@ void displayMed(MedicationListT * list){
 	temp= temp->next;
 }
 void displayVisits(VisitListT * list){
-	VisistListT * temp = list;
+	VisitListT * temp = list;
 	VisitT * i = NULL;
 	while(temp!=NULL){
 		i=temp->item;
