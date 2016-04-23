@@ -21,7 +21,7 @@
  * 
  */
 int main(int argc, char** argv) {
-    LoginT login = loginMain()
+    LoginT login = loginMain();
     
    if(login!=NULL)
         displayMainMenu(login.permissionLevel,0,login.username,login.uuid);
