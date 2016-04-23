@@ -331,33 +331,33 @@ PatientT * fetchPatient(char * uuid) {
 }
 
 void displayPatient(char* uuid){
-	PatientT patient = fetchPatient(uuid);
+	PatientT* patient = fetchPatient(uuid);
 	if(patient!=NULL){
 		printf("\n\n\n********************\n");
-		printf("MEDICAL RECORD: %33s",patient.uuid);
-		printf("\n\tNAME: %30s, %30s",patient.lastName,patient.firstName);
-		printf("\n\tRace: %30s",patient.race);
-		printf("\n\tGender: %30s",patient.gender);
-		printf("\n\tDOB: %11s",patient.dateOfBirth);
-		printf("\n\tSSN: %9s",patient.ssn);
-		printf("\n\tAGE: %i",patient.age);
-		if(patient.smokes){
+		printf("MEDICAL RECORD: %33s",patient->uuid);
+		printf("\n\tNAME: %30s, %30s",patient->lastName,patient->firstName);
+		printf("\n\tRace: %30s",patient->race);
+		printf("\n\tGender: %30s",patient->gender);
+		printf("\n\tDOB: %11s",patient->dateOfBirth);
+		printf("\n\tSSN: %9s",patient->ssn);
+		printf("\n\tAGE: %i",patient->age);
+		if(patient->smokes){
 			printf("\nSMOKES");
 		}else{
 			printf("\nnon-smoker");
 		}
-		displayIns(patient.insurance);
-		displayImmu(patient.immunizations);
-		displayMed(patient.medications);
-		displayVisits(patient.visits);
-		displayTests(patient.testResults);		
+		displayIns(patient->insurance);
+		displayImmu(patient->immunizations);
+		displayMed(patient->medications);
+		displayVisits(patient->visits);
+		displayTests(patient->testResults);		
 	}else{
 		printf("*****ERROR*****");
 	}
 }
 void displayIns(InsuranceT * insurance){
-	printf("\nINSURANCE: %40s",insurance.name);
-	printf("\n\tNumber: %30s",insurance.policyNumber);
+	printf("\nINSURANCE: %40s",insurance->name);
+	printf("\n\tNumber: %30s",insurance->policyNumber);
 }
 void displayImmu(ImmunizationListT * list){
 	ImmunizationListT * temp = list;
