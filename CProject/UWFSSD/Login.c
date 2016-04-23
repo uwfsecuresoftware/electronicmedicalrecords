@@ -16,9 +16,9 @@ int MAX_ATTEMPTS = 5;
 int MAX_BUFF = 20;
 //handles the login logic for lock out and attempts/ uses loginUser()
 
-int loginMain() {
+LoginT loginMain() {
     int attempts = 0;
-    int verify = -1;
+    LoginT verify=NULL;
     char usernameBuffer[20] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
     char passwordBuffer[20] = {'\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'};
 
@@ -39,7 +39,7 @@ int loginMain() {
         
         sanitizeInput(passwordBuffer, 20);
         verify = loginUser(usernameBuffer, passwordBuffer);
-        if (verify > 0)return verify;
+        if (verify != NULL)return verify;
     }
     //Lock out
     lockout(usernameBuffer);
@@ -51,7 +51,7 @@ int loginMain() {
 //takes the username and password, checks login file and returns a verdict 
 //Returns: permission level of the auth user, 0 if no login 
 
-int loginUser(char* user, char* pass) {
+LoginT loginUser(char* user, char* pass) {
 
     FILE *logins = fopen("logins", "r");
     LoginT *head = malloc(sizeof (LoginT));
@@ -115,14 +115,14 @@ int loginUser(char* user, char* pass) {
         if (strncmp(user, temp->username, 20) == 0) {
             if (strncmp(pass, temp->password, 20) == 0) {
                 if (isLocked(user) < 0) {
-                    return temp->permissionLevel;
+                    return temp;
                 }
 
             }
         }
         temp = temp->next;
     }
-    return 0;
+    return NULL;
 
 }
 //prompts user for account info then generates a UUID and appends to logins file as well as generating a blank UUID file 

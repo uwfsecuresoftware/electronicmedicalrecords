@@ -9,7 +9,7 @@
 
 
 #include <stdio.h>
-void displayMainMenu(int level, int remind){
+void displayMainMenu(int level, int remind,char* username, char* uuid){
     
    
     level =4;
