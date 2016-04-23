@@ -14,14 +14,6 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-LoginT loginMain();
-LoginT loginUser(char* , char*);
-int createUser();
-int deleteUser();
-void lockout(char*);
-int unlock(char*);
-int isLocked(char *);
-
 typedef struct{
     char username[20];
     char password[20];
@@ -33,6 +25,16 @@ typedef struct {
     char username[20];
     struct lockOutT *next;
 }lockOutT;
+
+
+LoginT loginMain();
+LoginT loginUser(char* , char*);
+int createUser();
+int deleteUser();
+void lockout(char*);
+int unlock(char*);
+int isLocked(char *);
+
 
 #ifdef __cplusplus
 extern "C" {
