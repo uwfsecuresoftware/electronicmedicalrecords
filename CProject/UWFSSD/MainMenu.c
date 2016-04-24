@@ -12,7 +12,7 @@
 void displayMainMenu(int level, int remind,char* username, char* uuid){
     
    
-    level =4;
+    //level =4;
     remind =0;
 
    int choice =0;
