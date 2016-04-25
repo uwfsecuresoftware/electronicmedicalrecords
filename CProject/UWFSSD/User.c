@@ -333,18 +333,18 @@ PatientT * fetchPatient(char * uuid) {
 void displayPatient(char* uuid){
 	PatientT* patient = fetchPatient(uuid);
 	if(patient!=NULL){
-		printf("\n\n\n********************\n");
-		printf("MEDICAL RECORD: %33s",patient->uuid);
-		printf("\n\tNAME: %30s, %30s",patient->lastName,patient->firstName);
-		printf("\n\tRace: %30s",patient->race);
-		printf("\n\tGender: %30s",patient->gender);
-		printf("\n\tDOB: %11s",patient->dateOfBirth);
-		printf("\n\tSSN: %9s",patient->ssn);
-		printf("\n\tAGE: %i",patient->age);
+		if(printf("\n\n\n********************\n"));
+		if(printf("MEDICAL RECORD: %33s",patient->uuid));
+		if(printf("\n\tNAME: %30s, %30s",patient->lastName,patient->firstName));
+		if(printf("\n\tRace: %30s",patient->race));
+		if(printf("\n\tGender: %30s",patient->gender));
+		if(printf("\n\tDOB: %11s",patient->dateOfBirth));
+		if(printf("\n\tSSN: %9s",patient->ssn));
+		if(printf("\n\tAGE: %i",patient->age));
 		if(patient->smokes){
-			printf("\nSMOKES");
+			if(printf("\nSMOKES"));
 		}else{
-			printf("\nnon-smoker");
+			if(printf("\nnon-smoker"));
 		}
 		displayIns(patient->insurance);
 		displayImmu(patient->immunizations);
@@ -352,12 +352,12 @@ void displayPatient(char* uuid){
 		displayVisits(patient->visits);
 		displayTests(patient->testResults);		
 	}else{
-		printf("*****ERROR*****");
+		if(printf("*****ERROR*****"));
 	}
 }
 void displayIns(InsuranceT * insurance){
-	printf("\nINSURANCE: %40s",insurance->name);
-	printf("\n\tNumber: %30s",insurance->policyNumber);
+	if(printf("\nINSURANCE: %40s",insurance->name));
+	if(printf("\n\tNumber: %30s",insurance->policyNumber));
 }
 void displayImmu(ImmunizationListT * list){
 	ImmunizationListT * temp = list;
@@ -365,9 +365,9 @@ void displayImmu(ImmunizationListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			printf("\nIMMNIZATION: %40s",i->name);
-			printf("\n\tDate: %20s",i->datePerformed);
-			printf("\n\tBy: %33s",i->performingPerson);
+			if(printf("\nIMMNIZATION: %40s",i->name));
+			if(printf("\n\tDate: %20s",i->datePerformed));
+			if(printf("\n\tBy: %33s",i->performingPerson));
 		}
 	}
 	temp= temp->next;
@@ -378,9 +378,9 @@ void displayMed(MedicationListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			printf("\nMed: %40s",i->name);
-			printf("\n\tDosage: %20s",i->dosage);
-			printf("\n\tBy: %33s",i->prescribingPerson);
+			if(printf("\nMed: %40s",i->name));
+			if(printf("\n\tDosage: %20s",i->dosage));
+			if(printf("\n\tBy: %33s",i->prescribingPerson));
 		}
 	}
 	temp= temp->next;
@@ -391,10 +391,10 @@ void displayVisits(VisitListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			printf("\nVISIT: %20s",i->visitDateTime);
-			printf("\n\tHeart Rate: %i",i->heartRate);
-			printf("\n\tBP: %i",i->bloodPressure);
-			printf("\n\tBy: %33s",i->personSeen);
+			if(printf("\nVISIT: %20s",i->visitDateTime));
+			if(printf("\n\tHeart Rate: %i",i->heartRate));
+			if(printf("\n\tBP: %i",i->bloodPressure));
+			if(printf("\n\tBy: %33s",i->personSeen));
 		}
 	}
 	temp= temp->next;
@@ -405,8 +405,8 @@ void displayTests(TestResultListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			printf("\nTEST: %40s",i->testName);
-			printf("\n\tResult: %120s",i->testResults);
+			if(printf("\nTEST: %40s",i->testName));
+			if(printf("\n\tResult: %120s",i->testResults));
 		}
 	}
 	temp= temp->next;
