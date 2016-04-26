@@ -358,7 +358,7 @@ PatientT * fetchPatient(char * uuid) {
 void displayPatient(char* uuid){
 	fprintf(stderr,"fetching patient info\n");
 	PatientT* patient = fetchPatient(uuid);
-	fprintf(stderr, "returning patient info\n");
+	fprintf(stderr, "returning patient info \n");
 	if(patient!=NULL){
 		if(printf("\n\n\n********************\n"));
 		if(printf("MEDICAL RECORD: %33s",patient->uuid));
@@ -396,8 +396,9 @@ void displayImmu(ImmunizationListT * list){
 			if(printf("\n\tDate: %20s",i->datePerformed));
 			if(printf("\n\tBy: %33s",i->performingPerson));
 		}
+		temp= temp->next;	
 	}
-	temp= temp->next;
+	
 }
 void displayMed(MedicationListT * list){
 	MedicationListT * temp = list;
@@ -409,8 +410,9 @@ void displayMed(MedicationListT * list){
 			if(printf("\n\tDosage: %20s",i->dosage));
 			if(printf("\n\tBy: %33s",i->prescribingPerson));
 		}
+		temp= temp->next;
 	}
-	temp= temp->next;
+	
 }
 void displayVisits(VisitListT * list){
 	VisitListT * temp = list;
@@ -423,8 +425,9 @@ void displayVisits(VisitListT * list){
 			if(printf("\n\tBP: %i",i->bloodPressure));
 			if(printf("\n\tBy: %33s",i->personSeen));
 		}
+		temp= temp->next;	
 	}
-	temp= temp->next;
+	
 }
 void displayTests(TestResultListT * list){
 	TestResultListT * temp = list;
@@ -435,6 +438,7 @@ void displayTests(TestResultListT * list){
 			if(printf("\nTEST: %40s",i->testName));
 			if(printf("\n\tResult: %120s",i->testResults));
 		}
+		temp= temp->next;	
 	}
-	temp= temp->next;
+	
 }

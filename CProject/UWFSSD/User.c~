@@ -6,6 +6,12 @@
 
 PatientCacheT * patientCache = NULL;
 
+void displayIns(InsuranceT * insurance);
+void displayImmu(ImmunizationListT * list);
+void displayMed(MedicationListT * list);
+void displayVisits(VisitListT * list);
+void displayTests(TestResultListT * list);
+
 PatientT * fetchPatient(char * uuid) {
 
 	fprintf(stderr,"Fetching Patient INFO\n");
@@ -38,8 +44,8 @@ PatientT * fetchPatient(char * uuid) {
 	fprintf(stderr,"NO RECORD SEARCHING FILE\n");
 	char fileName[45];
 	initializeString(fileName, 45);
-	strncpy(fileName, "records/", 8);
-	strncpy(fileName, uuid, 32);
+	strncat(fileName, "records/", 8);
+	strncat(fileName, uuid, 32);
 	FILE * userRecords = fopen(fileName, "r");
 	
 	char line[500];
@@ -80,9 +86,9 @@ PatientT * fetchPatient(char * uuid) {
 	
 	strncpy(patient->ssn, csvData[6], 10);
 	strncpy(patient->dateOfBirth, csvData[7], 10);
-	
-	//-------------------------------------------------------------------------------
-	//Insurance information
+	fprintf(stderr,"Read basic info\n");
+
+	fprintf(stderr,"Reading insuracne info");
 	if(fgets(line, 500, userRecords) == NULL) {
 		//Error during reading
 	}
@@ -101,6 +107,7 @@ PatientT * fetchPatient(char * uuid) {
 	
 	//--------------------------------------------------------------------------------
 	//Immunization data
+	fprintf(stderr,"Read Immunization");
 	if(fgets(line, 500, userRecords) == NULL) {
 		//Error during reading
 	}
@@ -336,7 +343,7 @@ PatientT * fetchPatient(char * uuid) {
 void displayPatient(char* uuid){
 	fprintf(stderr,"fetching patient info\n");
 	PatientT* patient = fetchPatient(uuid);
-	fprintf(stderr, "returning patient info\n");
+	fprintf(stderr, "returning patient info %i\n",patient);
 	if(patient!=NULL){
 		if(printf("\n\n\n********************\n"));
 		if(printf("MEDICAL RECORD: %33s",patient->uuid));
