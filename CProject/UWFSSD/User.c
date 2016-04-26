@@ -87,8 +87,7 @@ PatientT * fetchPatient(char * uuid) {
 	strncpy(patient->ssn, csvData[6], 10);
 	strncpy(patient->dateOfBirth, csvData[7], 10);
 	fprintf(stderr,"Read basic info\n");
-	//-------------------------------------------------------------------------------
-	//Insurance information
+
 	fprintf(stderr,"Reading insuracne info");
 	if(fgets(line, 500, userRecords) == NULL) {
 		//Error during reading

@@ -82,7 +82,7 @@ typedef struct {
 	char race[30];
 	char gender[30];
 	int age;
-	char * ssn;
+	char ssn[10];
 	InsuranceT * insurance;
 	char dateOfBirth[11];
 	ImmunizationListT * immunizations;

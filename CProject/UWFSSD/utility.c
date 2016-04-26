@@ -42,7 +42,7 @@ int getSizeOfString(char * string, int maxLength) {
 	return maxLength;
 }
 
-void parseCSV(char * line, char ** csvData) {
+void parseCSV(char * line, char csvData[10][50]) {
 	char buffer[50];
 	
 	initializeString(buffer, 50);
@@ -57,10 +57,15 @@ void parseCSV(char * line, char ** csvData) {
 			initializeString(csvData[currentField], 50);
 			strncpy(csvData[currentField], buffer, 50);
 			currentField++;
+			initializeString(buffer, 50);
 			continue;
 		}
 		if(i >= 0 && i < maxLength) {
-			strncat(buffer, line[i], 1);
+			char temp[2];
+			initializeString(temp, 2);
+			temp[0] = line[i];
+			
+			strncat(buffer, temp, 1);
 		}
 	}
 }
