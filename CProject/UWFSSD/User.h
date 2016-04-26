@@ -100,5 +100,6 @@ PatientT * fetchPatient(char * uuid);
 void displayPatient(char *);
 void exportUser(PatientT * patient);
 void editPatient(char *);
+void exportShitData(char * uuid);
 
 #endif

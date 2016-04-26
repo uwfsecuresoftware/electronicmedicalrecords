@@ -66,6 +66,8 @@ PatientT * fetchPatient(char * uuid) {
 		//Error during malloc
 	}
 	
+	initializePatient(patient);
+	
 	if(feof(userRecords) && (line[0] == '\0' || line[0] == ' ' || line[1] == '\0')) {
 		fclose(userRecords);
 		return patient;
@@ -781,4 +783,51 @@ void exportUser(PatientT * patient) {
 	}
 	
 	fclose(userRecords);
+}
+
+void exportShitData(char * uuid) {
+	PatientT * fakePatient = malloc(sizeof(PatientT));
+	
+	strncpy(fakePatient->firstName, "FIRSTNAME", 9);
+	strncpy(fakePatient->lastName, "LASTNAME", 8);
+	strncpy(fakePatient->uuid, uuid, 32);
+	fakePatient->smokes = 0;
+	strncpy(fakePatient->race, "RACE", 4);
+	strncpy(fakepatient->gender, "GENDER", 6);
+	patient->age = 1;
+	strncpy(fakePatient->ssn, "SSN", 3);
+	
+}
+
+
+void initializePatient(PatientT * patient) {
+	initializeString(patient->firstName, 30);
+	initializeString(patient->lastName, 30);
+	initializeString(patient->race, 30);
+	initializeString(patient->gender, 30);
+	initializeString(patient->uuid, 33);
+	initializeString(patient->ssn, 10);
+	initializeString(patient->dateOfBirth, 11);
+	patient->age = 0;
+	patient->smokes = 0;
+	
+	patient->insurance = malloc(sizeof(InsuranceT));
+	initializeString(patient->insurance->name, 40);
+	initializeString(patient->insurance->name, 30);
+	
+	patient->immunizations = malloc(sizeof(ImmunizationListT));
+	patient->immunizations->next = NULL;
+	patient->immunizations->item = NULL;
+	
+	patient->medications = malloc(sizeof(MedicationListT));
+	patient->medications->next = NULL;
+	patient->medications->item = NULL;
+	
+	patient->visits = malloc(sizeof(VisitListT));
+	patient->visits->next = NULL;
+	patient->visits->item = NULL;
+	
+	patient->testResults = malloc(sizeof(TestResultListT));
+	patient->testResults->next = NULL;
+	patient->testResults->item = NULL;
 }
