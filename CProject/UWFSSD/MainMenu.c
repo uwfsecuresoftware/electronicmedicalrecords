@@ -41,7 +41,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
     	}
 
 	if(fgets( temp,2,stdin) == NULL){};
-
+		sanitizeInt(temp,2);
 	    choice = temp[0] -48;
 
 	    //scanf(" %d", &choice);
