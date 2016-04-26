@@ -135,6 +135,10 @@ PatientT * fetchPatient(char * uuid) {
 		
 		ImmunizationT * record = malloc(sizeof(ImmunizationT));
 		
+		initializeString(record->name, 40);
+		initializeString(record->datePerformed, 20);
+		initializeString(record->performingPerson, 33);
+		
 		if(record == NULL) {
 			//Malloc error
 		}
@@ -151,6 +155,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastRecordImmu = lastRecordImmu->next;
+		lastRecordImmu->next = NULL;
 	}
 	
 	patient->immunizations = firstRecordImmu;
@@ -184,6 +189,8 @@ PatientT * fetchPatient(char * uuid) {
 		
 		MedicationT * record = malloc(sizeof(MedicationT));
 		
+		initializeString(record->prescribingPerson, 33);
+		
 		if(record == NULL) {
 			//Malloc error
 		}
@@ -208,6 +215,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastRecordMedi = lastRecordMedi->next;
+		lastRecordMedi->next = NULL;
 	}
 	
 	patient->medications = firstRecordMedi;
@@ -240,6 +248,9 @@ PatientT * fetchPatient(char * uuid) {
 		parseCSV(line, csvData);
 		
 		VisitT * record = malloc(sizeof(VisitT));
+		
+		initializeString(record->visitDateTime, 19);
+		initializeString(record->personSeen, 33);
 		
 		if(record == NULL) {
 			//Malloc error
@@ -274,6 +285,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastVisitRecord = lastVisitRecord->next;
+		lastVisitRecord->next = NULL;
 	}
 	
 	patient->visits = firstVisitRecord;
@@ -307,6 +319,8 @@ PatientT * fetchPatient(char * uuid) {
 		parseCSV(line, csvData);
 		
 		TestResultT * record = malloc(sizeof(TestResultT));
+		initializeString(record->testName, 30);
+		initializeString(record->testResults, 120);
 		
 		if(record == NULL) {
 			//Malloc error
@@ -323,6 +337,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastTestRecord = lastTestRecord->next;
+		lastTestRecord->next = NULL;
 	}
 	
 	patient->testResults = firstTestRecord;
