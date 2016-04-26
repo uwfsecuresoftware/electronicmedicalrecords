@@ -330,7 +330,7 @@ int isLocked(char* user) {
 //prompts and deletes user
 
 void deleteUser() {
-    /*FILE *logins = fopen("logins", "r");
+    FILE *logins = fopen("logins", "r");
     LoginT *head = malloc(sizeof (LoginT));
     LoginT *temp = malloc(sizeof (LoginT));
     LoginT *newElement = malloc(sizeof (LoginT));
@@ -366,26 +366,26 @@ void deleteUser() {
         if(fscanf(logins, "%19s", newElement->username) == 0) {
             //Error
         }
-        printf("got username:%s \n", newElement->username);
+       // printf("got username:%s \n", newElement->username);
         
         if(fscanf(logins, "%19s", newElement->password) == 0) {
             //Error
         }
-        printf("got password:%s \n", newElement->password);
+       // printf("got password:%s \n", newElement->password);
         
-        char number[2] = {'\0', '\0'};
-        if(fscanf(logins, "%1s", newElement->permissinLevel) == NULL) {
+         char number[3] = {'\0', '\0','\0'};
+        if(fscanf(logins, "%2s", number) == NULL) {
             //Error
         }
         
-      //  newElement->permissionLevel = (int) strtol(number, NULL, 10);
+        newElement->permissionLevel = (int) strtol(number, NULL, 10);
         
-        printf("got permissionLevel:%i \n", newElement->permissionLevel);
+       // printf("got permissionLevel:%i \n", newElement->permissionLevel);
         
         if(fscanf(logins, "%33s", &newElement->uuid) == 0) {
             //Error
         }
-        printf("got puuid:%s \n", newElement->uuid);
+       // printf("got puuid:%s \n", newElement->uuid);
 
 
         if (count == 0) {
@@ -401,7 +401,7 @@ void deleteUser() {
 
     }
     fclose(logins);
-    fprintf(stderr, "\nFinding CorrectLogin to do \n");
+    //fprintf(stderr, "\nFinding CorrectLogin to do \n");
     // run through and see all the usernames+ pass and cmp
     temp = head;
     saveCount = count;
@@ -412,7 +412,7 @@ void deleteUser() {
     } else {
         for (count = saveCount; count > 0; count--) {
             if (strncmp(usernameBuffer, temp->username, 20) == 0) {
-                fprintf(stderr, "\nFOUND!!! %s", temp->username);
+                //fprintf(stderr, "\nFOUND!!! %s", temp->username);
                 prev->next = temp->next;
                 numRmv++;
                 temp = prev->next;
@@ -426,8 +426,8 @@ void deleteUser() {
     //temp->next=0;
     temp = head;
     logins = fopen("logins", "w+");
-    for (count = count; count < saveCount - numRmv; count++) {
-        fprintf(stderr, "\n%s,!\n", temp->username);
+    for (count = count; count < saveCount - numRmv&&temp->permissionLevel!=0; count++) {
+        //fprintf(stderr, "\n%s,!\n", temp->username);
         if (count == 0)fprintf(logins, "%s", temp->username);
         else fprintf(logins, "\n%s", temp->username);
         fprintf(logins, " %s", temp->password);
@@ -437,6 +437,6 @@ void deleteUser() {
             temp = temp->next;
         }
     }
-    fclose(logins);*/
+    fclose(logins);
 	printf("\nIS NOT IMPLEMENTED\n");
 }
