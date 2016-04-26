@@ -500,6 +500,7 @@ void editPatient(char* uuid){
 				sanitizeInput(policyNumber,30);
 				strncpy(patient->insurance->name,name,40);
 				strncpy(patient->insurance->policyNumber,policyNumber,30);
+				exportUser(patient);
 				printf("\nUPDATED!\n");
 			break;
 			case 2:
@@ -567,6 +568,7 @@ void editPatient(char* uuid){
 				patient->smokes=smokes;
 				patient->age=age;
 				
+				exportUser(patient);
 				printf("\nUPDATED!\n");
 				
 			break;
