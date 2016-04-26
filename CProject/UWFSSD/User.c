@@ -148,6 +148,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->performingPerson, csvData[2], 33);
 		
 		lastRecordImmu->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastRecordImmu->next = NULL;
+			break;
+		}
 		lastRecordImmu->next = malloc(sizeof(ImmunizationListT));
 		
 		if(lastRecordImmu->next == NULL) {
@@ -208,6 +212,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->prescribingPerson, csvData[2], 33);
 		
 		lastRecordMedi->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastRecordMedi->next = NULL;
+			break;
+		}
 		lastRecordMedi->next = malloc(sizeof(MedicationListT));
 		
 		if(lastRecordMedi->next == NULL) {
@@ -278,6 +286,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->personSeen, csvData[3], 33);
 		
 		lastVisitRecord->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastVisitRecord->next = NULL;
+			break;
+		}
 		lastVisitRecord->next = malloc(sizeof(VisitT));
 		
 		if(lastVisitRecord->next == NULL) {
@@ -330,6 +342,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->testResults, csvData[1], 120);
 		
 		lastTestRecord->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastTestRecord->next = NULL;
+			break;
+		}
 		lastTestRecord->next = malloc(sizeof(TestResultT));
 		
 		if(lastTestRecord->next == NULL) {
