@@ -1,5 +1,6 @@
 #include "User.h"
 #include "utility.h"
+#include "Sanitizer.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -539,7 +540,7 @@ void editPatient(char* uuid){
 					printf("\nSmoker?{1=YES,0=NO}");
 					if(fgets(temp,2,stdin));
 					sanitizeInt(temp,2);
-					smoker=temp[0]-48;
+					smokes=temp[0]-48;
 				}
 				
 				printf("\nGENDER: ");
