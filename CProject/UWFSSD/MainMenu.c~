@@ -22,7 +22,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
   do{  
     choice =0;
     printf("WELCOME TO THE UWF SSD SECURE MEDICAL RECORDS \n");
-    printf("Your Permission Level is: %i\n",level);
+    printf("Your Permission Level is: %i",level);
     
     if(level == 1){//patient
         printf("[1] View personal records\n");
