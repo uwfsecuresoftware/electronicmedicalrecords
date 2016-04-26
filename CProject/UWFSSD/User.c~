@@ -135,6 +135,10 @@ PatientT * fetchPatient(char * uuid) {
 		
 		ImmunizationT * record = malloc(sizeof(ImmunizationT));
 		
+		initializeString(record->name, 40);
+		initializeString(record->datePerformed, 20);
+		initializeString(record->performingPerson, 33);
+		
 		if(record == NULL) {
 			//Malloc error
 		}
@@ -144,6 +148,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->performingPerson, csvData[2], 33);
 		
 		lastRecordImmu->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastRecordImmu->next = NULL;
+			break;
+		}
 		lastRecordImmu->next = malloc(sizeof(ImmunizationListT));
 		
 		if(lastRecordImmu->next == NULL) {
@@ -151,6 +159,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastRecordImmu = lastRecordImmu->next;
+		lastRecordImmu->next = NULL;
 	}
 	
 	patient->immunizations = firstRecordImmu;
@@ -184,6 +193,8 @@ PatientT * fetchPatient(char * uuid) {
 		
 		MedicationT * record = malloc(sizeof(MedicationT));
 		
+		initializeString(record->prescribingPerson, 33);
+		
 		if(record == NULL) {
 			//Malloc error
 		}
@@ -201,6 +212,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->prescribingPerson, csvData[2], 33);
 		
 		lastRecordMedi->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastRecordMedi->next = NULL;
+			break;
+		}
 		lastRecordMedi->next = malloc(sizeof(MedicationListT));
 		
 		if(lastRecordMedi->next == NULL) {
@@ -208,6 +223,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastRecordMedi = lastRecordMedi->next;
+		lastRecordMedi->next = NULL;
 	}
 	
 	patient->medications = firstRecordMedi;
@@ -241,6 +257,9 @@ PatientT * fetchPatient(char * uuid) {
 		
 		VisitT * record = malloc(sizeof(VisitT));
 		
+		initializeString(record->visitDateTime, 19);
+		initializeString(record->personSeen, 33);
+		
 		if(record == NULL) {
 			//Malloc error
 		}
@@ -267,6 +286,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->personSeen, csvData[3], 33);
 		
 		lastVisitRecord->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastVisitRecord->next = NULL;
+			break;
+		}
 		lastVisitRecord->next = malloc(sizeof(VisitT));
 		
 		if(lastVisitRecord->next == NULL) {
@@ -274,6 +297,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastVisitRecord = lastVisitRecord->next;
+		lastVisitRecord->next = NULL;
 	}
 	
 	patient->visits = firstVisitRecord;
@@ -307,6 +331,8 @@ PatientT * fetchPatient(char * uuid) {
 		parseCSV(line, csvData);
 		
 		TestResultT * record = malloc(sizeof(TestResultT));
+		initializeString(record->testName, 30);
+		initializeString(record->testResults, 120);
 		
 		if(record == NULL) {
 			//Malloc error
@@ -316,6 +342,10 @@ PatientT * fetchPatient(char * uuid) {
 		strncpy(record->testResults, csvData[1], 120);
 		
 		lastTestRecord->item = record;
+		if(i + 1 >= numberOfRecords) {
+			lastTestRecord->next = NULL;
+			break;
+		}
 		lastTestRecord->next = malloc(sizeof(TestResultT));
 		
 		if(lastTestRecord->next == NULL) {
@@ -323,6 +353,7 @@ PatientT * fetchPatient(char * uuid) {
 		}
 		
 		lastTestRecord = lastTestRecord->next;
+		lastTestRecord->next = NULL;
 	}
 	
 	patient->testResults = firstTestRecord;
@@ -343,7 +374,7 @@ PatientT * fetchPatient(char * uuid) {
 void displayPatient(char* uuid){
 	fprintf(stderr,"fetching patient info\n");
 	PatientT* patient = fetchPatient(uuid);
-	fprintf(stderr, "returning patient info %i\n",patient);
+	fprintf(stderr, "returning patient info \n");
 	if(patient!=NULL){
 		if(printf("\n\n\n********************\n"));
 		if(printf("MEDICAL RECORD: %33s",patient->uuid));
@@ -381,8 +412,9 @@ void displayImmu(ImmunizationListT * list){
 			if(printf("\n\tDate: %20s",i->datePerformed));
 			if(printf("\n\tBy: %33s",i->performingPerson));
 		}
+		temp= temp->next;	
 	}
-	temp= temp->next;
+	
 }
 void displayMed(MedicationListT * list){
 	MedicationListT * temp = list;
@@ -394,8 +426,9 @@ void displayMed(MedicationListT * list){
 			if(printf("\n\tDosage: %20s",i->dosage));
 			if(printf("\n\tBy: %33s",i->prescribingPerson));
 		}
+		temp= temp->next;
 	}
-	temp= temp->next;
+	
 }
 void displayVisits(VisitListT * list){
 	VisitListT * temp = list;
@@ -408,8 +441,9 @@ void displayVisits(VisitListT * list){
 			if(printf("\n\tBP: %i",i->bloodPressure));
 			if(printf("\n\tBy: %33s",i->personSeen));
 		}
+		temp= temp->next;	
 	}
-	temp= temp->next;
+	
 }
 void displayTests(TestResultListT * list){
 	TestResultListT * temp = list;
@@ -420,6 +454,7 @@ void displayTests(TestResultListT * list){
 			if(printf("\nTEST: %40s",i->testName));
 			if(printf("\n\tResult: %120s",i->testResults));
 		}
+		temp= temp->next;	
 	}
-	temp= temp->next;
+	
 }
