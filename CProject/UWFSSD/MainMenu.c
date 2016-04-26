@@ -107,8 +107,8 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
     }else if(level == 4){//admin
 
 	printf("[1] Set up new User account \n");
-	printf("[2] Deactivate User account \n");
-        printf("[3] Unlock User account\n");
+	//printf("[2] Deactivate User account \n");
+        printf("[2] Unlock User account\n");
 	printf("[9] Exit menu \n");
         if(fgets( temp,2,stdin) == NULL){};
         choice = temp[0] -48;
@@ -118,10 +118,10 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	    case 1://Setup user
                 if(createUser()){};
 	    break;
-	    case 2://remove user
-                if(deleteUser()){};
-	    break;
-            case 3:
+	    //case 2://remove user
+                //if(deleteUser()){};
+	    //break;
+            case 2:
                 while(getchar()!='\n');// clean out buffer
                 if(initializeString(usernameBuffer,20)){};
                 if(fgets(usernameBuffer,20,stdin)){};
