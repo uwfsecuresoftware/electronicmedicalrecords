@@ -6,6 +6,12 @@
 
 PatientCacheT * patientCache = NULL;
 
+void displayIns(InsuranceT * insurance);
+void displayImmu(ImmunizationListT * list);
+void displayMed(MedicationListT * list);
+void displayVisits(VisitListT * list);
+void displayTests(TestResultListT * list);
+
 PatientT * fetchPatient(char * uuid) {
 
 	fprintf(stderr,"Fetching Patient INFO\n");
@@ -38,8 +44,8 @@ PatientT * fetchPatient(char * uuid) {
 	fprintf(stderr,"NO RECORD SEARCHING FILE\n");
 	char fileName[45];
 	initializeString(fileName, 45);
-	strncpy(fileName, "records/", 8);
-	strncpy(fileName, uuid, 32);
+	strncat(fileName, "records/", 8);
+	strncat(fileName, uuid, 32);
 	FILE * userRecords = fopen(fileName, "r");
 	
 	char line[500];
