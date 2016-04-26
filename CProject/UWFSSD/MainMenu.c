@@ -9,6 +9,10 @@
 
 
 #include <stdio.h>
+#include "Login.h"
+#include "User.h"
+#include "utility.h"
+#include "Sanitizer.h"
 void displayMainMenu(int level, int remind,char* username, char* uuid){
     
    
@@ -116,17 +120,17 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
         
 	switch(choice){
 	    case 1://Setup user
-                if(createUser()){};
+                createUser();
 	    break;
 	    //case 2://remove user
                 //if(deleteUser()){};
 	    //break;
             case 2:
                 while(getchar()!='\n');// clean out buffer
-                if(initializeString(usernameBuffer,20)){};
+                initializeString(usernameBuffer,20);
                 if(fgets(usernameBuffer,20,stdin)){};
-                if(sanitizeInput(usernameBuffer)){};
-                if(unlock(usernameBuffer)){};
+                sanitizeInput(usernameBuffer, 20);
+                unlock(usernameBuffer);
                 break;
 	    case 9:
 	        printf("Exiting menu \n");
@@ -137,7 +141,5 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	}
 
     }
-    
-    if(scanf("")){};
   }while(choice != 9);   
 }

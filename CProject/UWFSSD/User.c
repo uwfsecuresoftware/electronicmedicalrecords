@@ -70,6 +70,7 @@ PatientT * fetchPatient(char * uuid) {
 	char csvData[10][50];
 	parseCSV(line, csvData);
 	
+	strncpy(patient->uuid, uuid, 33);
 	strncpy(patient->firstName, csvData[0], 29);
 	strncpy(patient->lastName, csvData[1], 29);
 	patient->smokes = (strncmp(csvData[2], "1", 1) == 0) ? true : false;
@@ -457,4 +458,169 @@ void displayTests(TestResultListT * list){
 		temp= temp->next;	
 	}
 	
+}
+
+
+void exportUser(PatientT * patient) {
+	if(patient == NULL) {
+		//Lol fuck you boi
+		return;
+	}
+	
+	char * uuid = patient->uuid;
+	
+	char fileName[45];
+	initializeString(fileName, 45);
+	strncat(fileName, "records/", 8);
+	strncat(fileName, uuid, 32);
+	FILE * userRecords = fopen(fileName, "w+");
+	
+	int err;
+	
+	err = fprintf(userRecords, "%29s,%29s,%d,%29s,%29s,%d,%9s,%10s\n", 
+		patient->firstName,
+		patient->lastName,
+		patient->smokes,
+		patient->race,
+		patient->gender,
+		patient->age,
+		patient->ssn,
+		patient->dateOfBirth 
+	);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	err = fprintf(userRecords, "%39s,%29s\n", 
+		patient->insurance->name,
+		patient->insurance->policyNumber
+	);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	ImmunizationListT * currentImmuList = patient->immunizations;
+	int numRecords = 1;
+	int i = 0;
+	
+	while(currentImmuList->next != NULL) {
+		currentImmuList = currentImmuList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "IMMUNIZATIONS,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentImmuList = patient->immunizations;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%39s,%19s,%32s\n", 
+			currentImmuList->item->name,
+			currentImmuList->item->datePerformed,
+			currentImmuList->item->performingPerson
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentImmuList = currentImmuList->next;
+	}
+	
+	
+	MedicationListT * currentMedList = patient->medications;
+	
+	while(currentMedList->next != NULL) {
+		currentMedList = currentMedList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "MEDICATIONS,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentMedList = patient->medications;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%39s,%d,%32s\n", 
+			currentMedList->item->name,
+			currentMedList->item->dosage,
+			currentMedList->item->prescribingPerson
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentMedList = currentMedList->next;
+	}
+	
+	
+	VisitListT * currentVisitList = patient->visits;
+	
+	while(currentVisitList->next != NULL) {
+		currentVisitList = currentVisitList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "VISITS,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentVisitList = patient->visits;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%d,%d,%19s,%32s\n", 
+			currentVisitList->item->heartRate,
+			currentVisitList->item->bloodPressure,
+			currentVisitList->item->visitDateTime,
+			currentVisitList->item->personSeen
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentVisitList = currentVisitList->next;
+	}
+	
+	
+	TestResultListT * currentTestList = patient->testResults;
+	
+	while(currentTestList->next != NULL) {
+		currentTestList = currentTestList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "TESTRESULT,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentTestList = patient->testResults;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%29s,%119s\n", 
+			currentTestList->item->testName,
+			currentTestList->item->testResults
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentTestList = currentTestList->next;
+	}
+	
+	fclose(userRecords);
 }

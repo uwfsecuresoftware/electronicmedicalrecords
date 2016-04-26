@@ -128,7 +128,7 @@ struct LoginT* loginUser(char* user, char* pass) {
 }
 //prompts user for account info then generates a UUID and appends to logins file as well as generating a blank UUID file 
 
-int createUser() {
+void createUser() {
     char usernameBuffer[20];
     initializeString(usernameBuffer, 20);
 
@@ -197,7 +197,7 @@ void lockout(char* user) {
 }
 //reads locokut file and removes from linked list
 
-int unlock(char* user) {
+void unlock(char* user) {
     FILE *lockoutFile = fopen("lockout", "r");
     
     lockOutT *head = malloc(sizeof (lockOutT));
@@ -316,7 +316,7 @@ int isLocked(char* user) {
 }
 //prompts and deletes user
 
-int deleteUser() {
+void deleteUser() {
     /*FILE *logins = fopen("logins", "r");
     LoginT *head = malloc(sizeof (LoginT));
     LoginT *temp = malloc(sizeof (LoginT));
