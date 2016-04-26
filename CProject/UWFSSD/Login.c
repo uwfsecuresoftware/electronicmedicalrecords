@@ -369,7 +369,7 @@ int deleteUser() {
         
         printf("got permissionLevel:%i \n", newElement->permissionLevel);
         
-        if(fscanf(logins, "%19s", &newElement->uuid) == 0) {
+        if(fscanf(logins, "%33s", &newElement->uuid) == 0) {
             //Error
         }
         printf("got puuid:%s \n", newElement->uuid);
