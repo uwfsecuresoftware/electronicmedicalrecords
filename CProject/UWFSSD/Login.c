@@ -24,7 +24,9 @@ struct LoginT* loginMain() {
 
     printf("ENTER USER: ");
     
-	fseek(stdin,0,SEEK_END);
+	if(fseek(stdin,0,SEEK_END) != 0) {
+        //oops
+    }
 	//while(getchar()!='\n');//clean buffer
     if(fgets(usernameBuffer, 20, stdin) == NULL) {
         //Something happened.
@@ -36,7 +38,9 @@ struct LoginT* loginMain() {
         printf("\nENTER PASSWORD: ");
         
 	
-	fseek(stdin,0,SEEK_END);
+	if(fseek(stdin,0,SEEK_END) != 0) {
+        //oops
+    }
 	//while(getchar()!='\n');//clean buffer
         if(fgets(passwordBuffer, 20, stdin) == NULL) {
             //Something happened
@@ -159,7 +163,9 @@ void createUser() {
     printf("Enter Username: ");
     
 	
-	fseek(stdin,0,SEEK_END);
+	if(fseek(stdin,0,SEEK_END) != 0) {
+        //Oops
+    }
 	//while(getchar()!='\n');//clean buffer
     if(fgets(usernameBuffer, 20, stdin) == NULL) {
         //error
@@ -170,7 +176,9 @@ void createUser() {
     printf("Enter Password: ");
     
 	
-	fseek(stdin,0,SEEK_END);
+	if(fseek(stdin,0,SEEK_END) != 0) {
+        //Oops
+    }
 	//while(getchar()!='\n');//clean buffer
     if(fgets(passwordBuffer, 20, stdin) == NULL) {
         //error
@@ -180,7 +188,11 @@ void createUser() {
 
     while (numInt < 0 || numInt > 5) {//verifies that the permission level is valid 0-5
         printf("Enter Permission level: ");
-	fseek(stdin,0,SEEK_END);//while(getchar()!='\n');//clean buffer
+	
+    if(fseek(stdin,0,SEEK_END) != 0) {
+        //Oops
+    }
+    //while(getchar()!='\n');//clean buffer
         if(fgets(num, 10, stdin) == NULL) {
             //error
         }

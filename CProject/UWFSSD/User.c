@@ -786,21 +786,6 @@ void exportUser(PatientT * patient) {
 	fclose(userRecords);
 }
 
-void exportShitData(char * uuid) {
-	PatientT * fakePatient = malloc(sizeof(PatientT));
-	
-	strncpy(fakePatient->firstName, "FIRSTNAME", 9);
-	strncpy(fakePatient->lastName, "LASTNAME", 8);
-	strncpy(fakePatient->uuid, uuid, 32);
-	fakePatient->smokes = 0;
-	strncpy(fakePatient->race, "RACE", 4);
-	strncpy(fakePatient->gender, "GENDER", 6);
-	fakePatient->age = 1;
-	strncpy(fakePatient->ssn, "SSN", 3);
-	
-}
-
-
 void initializePatient(PatientT * patient) {
 	initializeString(patient->firstName, 30);
 	initializeString(patient->lastName, 30);
