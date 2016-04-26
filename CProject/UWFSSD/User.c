@@ -612,7 +612,7 @@ void exportUser(PatientT * patient) {
 	
 	int err;
 	
-	err = fprintf(userRecords, "%29s,%29s,%d,%29s,%29s,%d,%9s,%10s\n", 
+	err = fprintf(userRecords, "%s,%s,%d,%s,%s,%d,%s,%s\n", 
 		patient->firstName,
 		patient->lastName,
 		patient->smokes,
@@ -627,7 +627,7 @@ void exportUser(PatientT * patient) {
 		//Error
 	}
 	
-	err = fprintf(userRecords, "%39s,%29s\n", 
+	err = fprintf(userRecords, "%s,%s\n", 
 		patient->insurance->name,
 		patient->insurance->policyNumber
 	);
@@ -654,7 +654,7 @@ void exportUser(PatientT * patient) {
 	currentImmuList = patient->immunizations;
 	
 	for(i = 0; i < numRecords; i++) {
-		err = fprintf(userRecords, "%39s,%19s,%32s\n", 
+		err = fprintf(userRecords, "%s,%s,%s\n", 
 			currentImmuList->item->name,
 			currentImmuList->item->datePerformed,
 			currentImmuList->item->performingPerson
@@ -684,7 +684,7 @@ void exportUser(PatientT * patient) {
 	currentMedList = patient->medications;
 	
 	for(i = 0; i < numRecords; i++) {
-		err = fprintf(userRecords, "%39s,%d,%32s\n", 
+		err = fprintf(userRecords, "%s,%d,%s\n", 
 			currentMedList->item->name,
 			currentMedList->item->dosage,
 			currentMedList->item->prescribingPerson
@@ -714,7 +714,7 @@ void exportUser(PatientT * patient) {
 	currentVisitList = patient->visits;
 	
 	for(i = 0; i < numRecords; i++) {
-		err = fprintf(userRecords, "%d,%d,%19s,%32s\n", 
+		err = fprintf(userRecords, "%d,%d,%s,%s\n", 
 			currentVisitList->item->heartRate,
 			currentVisitList->item->bloodPressure,
 			currentVisitList->item->visitDateTime,
@@ -745,7 +745,7 @@ void exportUser(PatientT * patient) {
 	currentTestList = patient->testResults;
 	
 	for(i = 0; i < numRecords; i++) {
-		err = fprintf(userRecords, "%29s,%119s\n", 
+		err = fprintf(userRecords, "%s,%s\n", 
 			currentTestList->item->testName,
 			currentTestList->item->testResults
 		);
