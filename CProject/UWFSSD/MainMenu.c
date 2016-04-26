@@ -75,8 +75,8 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	    case 2://view update patient records 
                 while(getchar()!='\n');// clean out buffer
                 initializeString(uuidBuffer,33);
-                if(fgets(uuidBuffer,32,stdin)){};
-                sanitizeInput(uuidBuffer, 32);
+                if(fgets(uuidBuffer,33,stdin)){};
+                sanitizeInput(uuidBuffer, 33);
                 editPatient(uuidBuffer);
 	    break;
 	    case 3://Record vitals funct
