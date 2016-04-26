@@ -140,13 +140,13 @@ PatientT * fetchPatient(char * uuid) {
 		
 		ImmunizationT * record = malloc(sizeof(ImmunizationT));
 		
-		initializeString(record->name, 40);
-		initializeString(record->datePerformed, 20);
-		initializeString(record->performingPerson, 33);
-		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->name, 40);
+		initializeString(record->datePerformed, 20);
+		initializeString(record->performingPerson, 33);
 		
 		strncpy(record->name, csvData[0], 40);
 		strncpy(record->datePerformed, csvData[1], 20);
@@ -198,11 +198,11 @@ PatientT * fetchPatient(char * uuid) {
 		
 		MedicationT * record = malloc(sizeof(MedicationT));
 		
-		initializeString(record->prescribingPerson, 33);
-		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->prescribingPerson, 33);
 		
 		strncpy(record->name, csvData[0], 40);
 		
@@ -262,12 +262,12 @@ PatientT * fetchPatient(char * uuid) {
 		
 		VisitT * record = malloc(sizeof(VisitT));
 		
-		initializeString(record->visitDateTime, 19);
-		initializeString(record->personSeen, 33);
-		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->visitDateTime, 19);
+		initializeString(record->personSeen, 33);
 		
 		const int heartRate = (int) strtol(csvData[0], NULL, 10);
 		if(heartRate == 0) {
@@ -336,12 +336,13 @@ PatientT * fetchPatient(char * uuid) {
 		parseCSV(line, csvData);
 		
 		TestResultT * record = malloc(sizeof(TestResultT));
-		initializeString(record->testName, 30);
-		initializeString(record->testResults, 120);
 		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->testName, 30);
+		initializeString(record->testResults, 120);
 		
 		strncpy(record->testName, csvData[0], 30);
 		strncpy(record->testResults, csvData[1], 120);
@@ -594,6 +595,8 @@ void editPatient(char* uuid){
 			case 9:
 			
 			break;
+			default:
+				break;
 		}
 		
 	}
