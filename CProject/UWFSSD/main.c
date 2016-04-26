@@ -20,7 +20,7 @@
 /*
  * 
  */
-int main(int argc, char** argv) {
+int main() {
     LoginT * login = loginMain();
     printf("%s",login->username);
    if(login!=NULL){
