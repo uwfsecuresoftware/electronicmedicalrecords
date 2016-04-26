@@ -486,6 +486,7 @@ void editPatient(char* uuid){
 		//process choice
 		switch(choice){
 			case 1:
+			;
 				//edit insurance
 				char name[40];
 				char policyNumber[30];	
@@ -512,6 +513,7 @@ void editPatient(char* uuid){
 			case 5:
 			break;
 			case 6:
+			;
 				
 				char firstName[30];
 				initializeString(firstName,30);
@@ -573,8 +575,7 @@ void editPatient(char* uuid){
 				
 			break;
 			case 9:
-			//rewrite to file
-			//free memory!!!!!!
+			
 			break;
 		}
 		
