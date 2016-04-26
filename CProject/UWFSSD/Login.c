@@ -386,7 +386,7 @@ void deleteUser() {
        // printf("got password:%s \n", newElement->password);
         
          char number[3] = {'\0', '\0','\0'};
-        if(fscanf(logins, "%2s", number) == NULL) {
+        if(fscanf(logins, "%2s", number) == 0) {
             //Error
         }
         
@@ -394,7 +394,7 @@ void deleteUser() {
         
        // printf("got permissionLevel:%i \n", newElement->permissionLevel);
         
-        if(fscanf(logins, "%33s", &newElement->uuid) == 0) {
+        if(fscanf(logins, "%33s", newElement->uuid) == 0) {
             //Error
         }
        // printf("got puuid:%s \n", newElement->uuid);
