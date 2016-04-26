@@ -24,6 +24,8 @@ struct LoginT* loginMain() {
 
     printf("ENTER USER: ");
     
+	fseek(stdin,0,SEEK_END);
+	//while(getchar()!='\n');//clean buffer
     if(fgets(usernameBuffer, 20, stdin) == NULL) {
         //Something happened.
     }
@@ -33,6 +35,9 @@ struct LoginT* loginMain() {
         attempts++;
         printf("\nENTER PASSWORD: ");
         
+	
+	fseek(stdin,0,SEEK_END);
+	//while(getchar()!='\n');//clean buffer
         if(fgets(passwordBuffer, 20, stdin) == NULL) {
             //Something happened
         }
@@ -99,7 +104,7 @@ struct LoginT* loginUser(char* user, char* pass) {
             temp = newElement;
         }
         //temp = newElement->next;
-        printf("%i: %s, %s, %i\n",count,newElement->username,newElement->password,newElement->permissionLevel);
+       // printf("%i: %s, %s, %i\n",count,newElement->username,newElement->password,newElement->permissionLevel);
         count++;
 
     }
@@ -109,13 +114,13 @@ struct LoginT* loginUser(char* user, char* pass) {
 
     //Don't judge this - it keeps the warnings down
     for (count = count; count > 0; count--) {
-         printf("Usernames found: %s\n",temp->username);
-         printf("compares: %i %i\n",strncmp(user,temp->username,20),strncmp(pass,temp->password,20));
+        // printf("Usernames found: %s\n",temp->username);
+         //printf("compares: %i %i\n",strncmp(user,temp->username,20),strncmp(pass,temp->password,20));
         //user,pass);
         if (strncmp(user, temp->username, 20) == 0) {
             if (strncmp(pass, temp->password, 20) == 0) {
                 if (isLocked(user) < 0) {
-                    fprintf(stderr,"returning");
+                    fprintf(stderr,"\n\n\n");
                     return temp;
                 }
 
@@ -146,12 +151,16 @@ void createUser() {
     //printf("THIS IS THE UUID:: %s",uuid);
 
     int numInt = -1;
-
+	
+	//while(getchar()!='\n');//clean buffer
     if(fgets(usernameBuffer, 20, stdin) == NULL) { // clears input buffer 
         //error
     } 
     printf("Enter Username: ");
     
+	
+	fseek(stdin,0,SEEK_END);
+	//while(getchar()!='\n');//clean buffer
     if(fgets(usernameBuffer, 20, stdin) == NULL) {
         //error
     }
@@ -160,6 +169,9 @@ void createUser() {
 
     printf("Enter Password: ");
     
+	
+	fseek(stdin,0,SEEK_END);
+	//while(getchar()!='\n');//clean buffer
     if(fgets(passwordBuffer, 20, stdin) == NULL) {
         //error
     }
@@ -168,6 +180,7 @@ void createUser() {
 
     while (numInt < 0 || numInt > 5) {//verifies that the permission level is valid 0-5
         printf("Enter Permission level: ");
+	fseek(stdin,0,SEEK_END);//while(getchar()!='\n');//clean buffer
         if(fgets(num, 10, stdin) == NULL) {
             //error
         }
@@ -210,7 +223,7 @@ void unlock(char* user) {
     }
     int count = 0;
     int saveCount = 0;
-    fprintf(stderr, "inivar \n");
+   // fprintf(stderr, "inivar \n");
     while (!feof(lockoutFile)) {
         newElement = malloc(sizeof (lockOutT));
         
@@ -221,7 +234,7 @@ void unlock(char* user) {
         if(fscanf(lockoutFile, "%19s", newElement->username) == 0) {
             //Read error
         }
-        fprintf(stderr, "found: %s", newElement->username);
+       // fprintf(stderr, "found: %s", newElement->username);
         if (count == 0) {
             head = newElement;
             temp = head;
@@ -236,12 +249,12 @@ void unlock(char* user) {
     prev = head;
     sanitizeInput(user, 20);
     for (count = count; count > 0; count--) {
-        fprintf(stderr, "loop %i", strncmp(user, temp->username, 20));
+      //fprintf(stderr, "loop %i", strncmp(user, temp->username, 20));
         sanitizeInput(temp->username, 20);
 
         if (strncmp(user, temp->username, 20) == 0) {
             prev->next = temp->next;
-            fprintf(stderr, "found!!! \n");
+          //  fprintf(stderr, "found!!! \n");
         }
         prev = temp;
         if (temp->next != 0)
@@ -251,12 +264,12 @@ void unlock(char* user) {
     temp = head;
     lockoutFile = fopen("lockout", "w");
     for (count = count; count <= saveCount; count++) {
-        fprintf(stderr, "%i-> %s", count, temp->username);
+        //fprintf(stderr, "%i-> %s", count, temp->username);
         if (temp->next != 0) {
             if (count == 0)
                 fprintf(lockoutFile, "%s", temp->username);
-            fprintf(lockoutFile, "\n%s", temp->username);
-            temp = temp->next;
+            	fprintf(lockoutFile, "\n%s", temp->username);
+            	temp = temp->next;
         }
 
     }
@@ -425,5 +438,5 @@ void deleteUser() {
         }
     }
     fclose(logins);*/
-	printf("IS NOT IMPLEMENTED");
+	printf("\nIS NOT IMPLEMENTED\n");
 }

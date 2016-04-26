@@ -383,13 +383,13 @@ void displayPatient(char* uuid){
 	fprintf(stderr, "returning patient info \n");
 	if(patient!=NULL){
 		if(printf("\n\n\n********************\n"));
-		if(printf("MEDICAL RECORD: %33s",patient->uuid));
-		if(printf("\n\tNAME: %30s, %30s",patient->lastName,patient->firstName));
-		if(printf("\n\tRace: %30s",patient->race));
-		if(printf("\n\tGender: %30s",patient->gender));
-		if(printf("\n\tDOB: %11s",patient->dateOfBirth));
-		if(printf("\n\tSSN: %9s",patient->ssn));
-		if(printf("\n\tAGE: %i",patient->age));
+		if(printf("MEDICAL RECORD: %-33s",patient->uuid));
+		if(printf("\n\tNAME: %-30s, %-30s",patient->lastName,patient->firstName));
+		if(printf("\n\tRace: %-30s",patient->race));
+		if(printf("\n\tGender: %-30s",patient->gender));
+		if(printf("\n\tDOB: %-11s",patient->dateOfBirth));
+		if(printf("\n\tSSN: %-9s",patient->ssn));
+		if(printf("\n\tAGE: %-i",patient->age));
 		if(patient->smokes){
 			if(printf("\nSMOKES"));
 		}else{
@@ -405,8 +405,8 @@ void displayPatient(char* uuid){
 	}
 }
 void displayIns(InsuranceT * insurance){
-	if(printf("\nINSURANCE: %40s",insurance->name));
-	if(printf("\n\tNumber: %30s",insurance->policyNumber));
+	if(printf("\nINSURANCE: %-40s",insurance->name));
+	if(printf("\n\tNumber: %-30s",insurance->policyNumber));
 }
 void displayImmu(ImmunizationListT * list){
 	ImmunizationListT * temp = list;
@@ -414,9 +414,9 @@ void displayImmu(ImmunizationListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nIMMNIZATION: %40s",i->name));
-			if(printf("\n\tDate: %20s",i->datePerformed));
-			if(printf("\n\tBy: %33s",i->performingPerson));
+			if(printf("\nIMMNIZATION: %-40s",i->name));
+			if(printf("\n\tDate: %-20s",i->datePerformed));
+			if(printf("\n\tBy: %-33s",i->performingPerson));
 		}
 		temp= temp->next;	
 	}
@@ -428,9 +428,9 @@ void displayMed(MedicationListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nMed: %40s",i->name));
-			if(printf("\n\tDosage: %i",i->dosage));
-			if(printf("\n\tBy: %33s",i->prescribingPerson));
+			if(printf("\nMed: %-40s",i->name));
+			if(printf("\n\tDosage: %-i",i->dosage));
+			if(printf("\n\tBy: %-33s",i->prescribingPerson));
 		}
 		temp= temp->next;
 	}
@@ -442,10 +442,10 @@ void displayVisits(VisitListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nVISIT: %20s",i->visitDateTime));
-			if(printf("\n\tHeart Rate: %i",i->heartRate));
-			if(printf("\n\tBP: %i",i->bloodPressure));
-			if(printf("\n\tBy: %33s",i->personSeen));
+			if(printf("\nVISIT: %-20s",i->visitDateTime));
+			if(printf("\n\tHeart Rate: %-i",i->heartRate));
+			if(printf("\n\tBP: %-i",i->bloodPressure));
+			if(printf("\n\tBy: %-33s",i->personSeen));
 		}
 		temp= temp->next;	
 	}
@@ -457,8 +457,8 @@ void displayTests(TestResultListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nTEST: %40s",i->testName));
-			if(printf("\n\tResult: %120s",i->testResults));
+			if(printf("\nTEST: %-40s",i->testName));
+			if(printf("\n\tResult: %-120s",i->testResults));
 		}
 		temp= temp->next;	
 	}
@@ -498,8 +498,10 @@ void editPatient(char* uuid){
 				char policyNumber[30];	
 				initializeString(name,40);
 				initializeString(policyNumber,40);
+				while(getchar()!='\n');//clean buffer
 				printf("INSURANCE NAME: ");
 				if(fgets(name,40,stdin));
+				while(getchar()!='\n');//clean buffer
 				printf("\nPOLICY NO: ");
 				if(fgets(policyNumber,30,stdin));
 				printf("\n");
@@ -525,25 +527,29 @@ void editPatient(char* uuid){
 				initializeString(firstName,30);
 				char lastName[30];
 				initializeString(lastName,30);
-				bool smokes=0;
+				bool smokes=3;
 				char race[30];
 				initializeString(race,30);
 				char gender[30];
 				initializeString(gender,30);
-				int age=0;
-				char tempAge[4];
-				initializeString(tempAge,4);
+				int age=-1;
+				char tempAge[10];
+				initializeString(tempAge,10);
 				char ssn[10];
 				initializeString(ssn,10);
 				char dateOfBirth[11];
 				initializeString(dateOfBirth,11);
 				
+				while(getchar()!='\n');//clean buffer
 				printf("FIRSTNAME: ");
 				if(fgets(firstName,30,stdin));
+
+				while(getchar()!='\n');//clean buffer
 				printf("\nLASTNAME: ");
 				if(fgets(lastName,30,stdin));
 				
-				while(smokes==0||smokes==1){
+				while(getchar()!='\n');//clean buffer
+				while(smokes!=0&&smokes!=1){
 					printf("\nSmoker?{1=YES,0=NO}");
 					if(fgets(temp,2,stdin));
 					sanitizeInt(temp,2);
@@ -551,18 +557,28 @@ void editPatient(char* uuid){
 					while(getchar()!='\n');//clean buffer
 				}
 				
+				while(getchar()!='\n');//clean buffer
 				printf("\nGENDER: ");
 				if(fgets(gender,30,stdin));
+
+
+				while(getchar()!='\n');//clean buffer
+				printf("\nRACE: ");
+				if(fgets(race,30,stdin));
+
 				
-				while(age>0&&age<999){
+				while(getchar()!='\n');//clean buffer
+				while(age<=0||age>=999){
 					printf("\nAGE {000}");
 					if(fgets(tempAge,3,stdin));
-					sanitizeInt(tempAge,4);
+					//sanitizeInt(tempAge,4);
 					//age+=((tempAge[0]+48)*1);
 					//age+=((tempAge[1]+48)*10);
 					//age+=((tempAge[2]+48)*100);
 					age= (int) strtol(tempAge,NULL,10);
+					while(getchar()!='\n');//clean buffer
 				}
+
 				while(getchar()!='\n');//clean buffer
 				printf("\nSSN: ");
 				if(fgets(ssn,10,stdin));

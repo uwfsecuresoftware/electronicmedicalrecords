@@ -62,7 +62,7 @@ void displayMainMenu(int level, int remind, const char* username, char* uuid){
     	}	
     }else if(level ==2){//nurse
         printf("[1] View Patient records\n");
-	    printf("[2] Update Patient records \n");
+	printf("[2] Update Patient records \n");
         printf("[3] Record vitals\n"); 
         printf("[9] Exit menu \n");
 	if(fgets( temp,2,stdin) == NULL){};
@@ -74,6 +74,7 @@ void displayMainMenu(int level, int remind, const char* username, char* uuid){
 	    break;
 	    case 2://view update patient records 
                 while(getchar()!='\n');// clean out buffer
+		printf("\nENTER UUID: ");
                 initializeString(uuidBuffer,33);
                 if(fgets(uuidBuffer,33,stdin)){};
                 sanitizeInput(uuidBuffer, 33);
@@ -102,6 +103,12 @@ void displayMainMenu(int level, int remind, const char* username, char* uuid){
 	    case 1://View patients info
 	    break;
 	    case 2://Update rec
+		while(getchar()!='\n');// clean out buffer
+		printf("\nENTER UUID: ");
+                initializeString(uuidBuffer,33);
+                if(fgets(uuidBuffer,33,stdin)){};
+                sanitizeInput(uuidBuffer, 33);
+                editPatient(uuidBuffer);
 	    break;
 	    case 3://Medical rec
 	    break;

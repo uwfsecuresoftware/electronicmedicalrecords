@@ -1,5 +1,6 @@
 #include "User.h"
 #include "utility.h"
+#include "Sanitizer.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +40,9 @@ PatientT * fetchPatient(char * uuid) {
 		if(strncmp(currentRecord->item->uuid, uuid, 33)) {
 			return currentRecord->item;
 		}
+		else {
+			currentRecord = currentRecord->next;
+		}
 	}
 	//No record :c
 	fprintf(stderr,"NO RECORD SEARCHING FILE\n");
@@ -70,6 +74,7 @@ PatientT * fetchPatient(char * uuid) {
 	char csvData[10][50];
 	parseCSV(line, csvData);
 	
+	strncpy(patient->uuid, uuid, 33);
 	strncpy(patient->firstName, csvData[0], 29);
 	strncpy(patient->lastName, csvData[1], 29);
 	patient->smokes = (strncmp(csvData[2], "1", 1) == 0) ? true : false;
@@ -135,13 +140,13 @@ PatientT * fetchPatient(char * uuid) {
 		
 		ImmunizationT * record = malloc(sizeof(ImmunizationT));
 		
-		initializeString(record->name, 40);
-		initializeString(record->datePerformed, 20);
-		initializeString(record->performingPerson, 33);
-		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->name, 40);
+		initializeString(record->datePerformed, 20);
+		initializeString(record->performingPerson, 33);
 		
 		strncpy(record->name, csvData[0], 40);
 		strncpy(record->datePerformed, csvData[1], 20);
@@ -193,11 +198,11 @@ PatientT * fetchPatient(char * uuid) {
 		
 		MedicationT * record = malloc(sizeof(MedicationT));
 		
-		initializeString(record->prescribingPerson, 33);
-		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->prescribingPerson, 33);
 		
 		strncpy(record->name, csvData[0], 40);
 		
@@ -257,12 +262,12 @@ PatientT * fetchPatient(char * uuid) {
 		
 		VisitT * record = malloc(sizeof(VisitT));
 		
-		initializeString(record->visitDateTime, 19);
-		initializeString(record->personSeen, 33);
-		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->visitDateTime, 19);
+		initializeString(record->personSeen, 33);
 		
 		const int heartRate = (int) strtol(csvData[0], NULL, 10);
 		if(heartRate == 0) {
@@ -331,12 +336,13 @@ PatientT * fetchPatient(char * uuid) {
 		parseCSV(line, csvData);
 		
 		TestResultT * record = malloc(sizeof(TestResultT));
-		initializeString(record->testName, 30);
-		initializeString(record->testResults, 120);
 		
 		if(record == NULL) {
 			//Malloc error
 		}
+		
+		initializeString(record->testName, 30);
+		initializeString(record->testResults, 120);
 		
 		strncpy(record->testName, csvData[0], 30);
 		strncpy(record->testResults, csvData[1], 120);
@@ -377,13 +383,13 @@ void displayPatient(char* uuid){
 	fprintf(stderr, "returning patient info \n");
 	if(patient!=NULL){
 		if(printf("\n\n\n********************\n"));
-		if(printf("MEDICAL RECORD: %33s",patient->uuid));
-		if(printf("\n\tNAME: %30s, %30s",patient->lastName,patient->firstName));
-		if(printf("\n\tRace: %30s",patient->race));
-		if(printf("\n\tGender: %30s",patient->gender));
-		if(printf("\n\tDOB: %11s",patient->dateOfBirth));
-		if(printf("\n\tSSN: %9s",patient->ssn));
-		if(printf("\n\tAGE: %i",patient->age));
+		if(printf("MEDICAL RECORD: %-33s",patient->uuid));
+		if(printf("\n\tNAME: %-30s, %-30s",patient->lastName,patient->firstName));
+		if(printf("\n\tRace: %-30s",patient->race));
+		if(printf("\n\tGender: %-30s",patient->gender));
+		if(printf("\n\tDOB: %-11s",patient->dateOfBirth));
+		if(printf("\n\tSSN: %-9s",patient->ssn));
+		if(printf("\n\tAGE: %-i",patient->age));
 		if(patient->smokes){
 			if(printf("\nSMOKES"));
 		}else{
@@ -399,8 +405,8 @@ void displayPatient(char* uuid){
 	}
 }
 void displayIns(InsuranceT * insurance){
-	if(printf("\nINSURANCE: %40s",insurance->name));
-	if(printf("\n\tNumber: %30s",insurance->policyNumber));
+	if(printf("\nINSURANCE: %-40s",insurance->name));
+	if(printf("\n\tNumber: %-30s",insurance->policyNumber));
 }
 void displayImmu(ImmunizationListT * list){
 	ImmunizationListT * temp = list;
@@ -408,9 +414,9 @@ void displayImmu(ImmunizationListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nIMMNIZATION: %40s",i->name));
-			if(printf("\n\tDate: %20s",i->datePerformed));
-			if(printf("\n\tBy: %33s",i->performingPerson));
+			if(printf("\nIMMNIZATION: %-40s",i->name));
+			if(printf("\n\tDate: %-20s",i->datePerformed));
+			if(printf("\n\tBy: %-33s",i->performingPerson));
 		}
 		temp= temp->next;	
 	}
@@ -422,9 +428,9 @@ void displayMed(MedicationListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nMed: %40s",i->name));
-			if(printf("\n\tDosage: %20s",i->dosage));
-			if(printf("\n\tBy: %33s",i->prescribingPerson));
+			if(printf("\nMed: %-40s",i->name));
+			if(printf("\n\tDosage: %-i",i->dosage));
+			if(printf("\n\tBy: %-33s",i->prescribingPerson));
 		}
 		temp= temp->next;
 	}
@@ -436,10 +442,10 @@ void displayVisits(VisitListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nVISIT: %20s",i->visitDateTime));
-			if(printf("\n\tHeart Rate: %i",i->heartRate));
-			if(printf("\n\tBP: %i",i->bloodPressure));
-			if(printf("\n\tBy: %33s",i->personSeen));
+			if(printf("\nVISIT: %-20s",i->visitDateTime));
+			if(printf("\n\tHeart Rate: %-i",i->heartRate));
+			if(printf("\n\tBP: %-i",i->bloodPressure));
+			if(printf("\n\tBy: %-33s",i->personSeen));
 		}
 		temp= temp->next;	
 	}
@@ -451,10 +457,328 @@ void displayTests(TestResultListT * list){
 	while(temp!=NULL){
 		i=temp->item;
 		if(i!=NULL){
-			if(printf("\nTEST: %40s",i->testName));
-			if(printf("\n\tResult: %120s",i->testResults));
+			if(printf("\nTEST: %-40s",i->testName));
+			if(printf("\n\tResult: %-120s",i->testResults));
 		}
 		temp= temp->next;	
 	}
 	
+}
+
+void editPatient(char* uuid){
+	//TODO check if uuid is part of DOC's patients
+	PatientT * patient = fetchPatient(uuid);
+	fprintf(stderr, "found patient\n");
+	
+	
+	int choice=0;
+	char temp[2];
+	initializeString(temp,2);
+	//display edit menu
+	while(choice!=9){
+		displayPatient(uuid);
+		printf("\n****Edit Patient\n");
+		printf("[1] Insurance\n");
+		printf("[2] Add Immunization\n");
+		printf("[3] Add Medication\n");
+		printf("[4] Add Vitals\n");
+		printf("[5] Add Test Results\n");
+		printf("[6] Demographics\n");
+		printf("[9] EXIT\n");
+		//get input
+		if(fgets(temp,2,stdin));
+		choice = temp[0]-48;
+		//process choice
+		switch(choice){
+			case 1:
+			;
+			while(getchar()!='\n');//clean buffer
+				//edit insurance
+				char name[40];
+				char policyNumber[30];	
+				initializeString(name,40);
+				initializeString(policyNumber,40);
+				while(getchar()!='\n');//clean buffer
+				printf("INSURANCE NAME: ");
+				if(fgets(name,40,stdin));
+				while(getchar()!='\n');//clean buffer
+				printf("\nPOLICY NO: ");
+				if(fgets(policyNumber,30,stdin));
+				printf("\n");
+				sanitizeInput(name,40);
+				sanitizeInput(policyNumber,30);
+				strncpy(patient->insurance->name,name,40);
+				strncpy(patient->insurance->policyNumber,policyNumber,30);
+				exportUser(patient);
+				printf("\nUPDATED!\n");
+			break;
+			case 2:
+			break;
+			case 3:
+			break;
+			case 4:
+			break;
+			case 5:
+			break;
+			case 6:
+			;
+				while(getchar()!='\n');//clean buffer
+				char firstName[30];
+				initializeString(firstName,30);
+				char lastName[30];
+				initializeString(lastName,30);
+				bool smokes=0;
+				char race[30];
+				initializeString(race,30);
+				char gender[30];
+				initializeString(gender,30);
+				int age=-1;
+				char tempAge[10];
+				initializeString(tempAge,10);
+				char ssn[10];
+				initializeString(ssn,10);
+				char dateOfBirth[11];
+				initializeString(dateOfBirth,11);
+				
+				while(getchar()!='\n');//clean buffer
+				printf("FIRSTNAME: ");
+				if(fgets(firstName,30,stdin));
+
+				while(getchar()!='\n');//clean buffer
+				printf("\nLASTNAME: ");
+				if(fgets(lastName,30,stdin));
+				
+				while(getchar()!='\n');//clean buffer
+				while(smokes!=0&&smokes!=1){
+					printf("\nSmoker?{1=YES,0=NO}");
+					if(fgets(temp,2,stdin));
+					sanitizeInt(temp,2);
+					smokes=temp[0]-48;
+					while(getchar()!='\n');//clean buffer
+				}
+				
+				while(getchar()!='\n');//clean buffer
+				printf("\nGENDER: ");
+				if(fgets(gender,30,stdin));
+
+
+				while(getchar()!='\n');//clean buffer
+				printf("\nRACE: ");
+				if(fgets(race,30,stdin));
+
+				
+				while(getchar()!='\n');//clean buffer
+				while(age<=0&&age>=999){
+					printf("\nAGE {000}");
+					if(fgets(tempAge,3,stdin));
+					//sanitizeInt(tempAge,4);
+					//age+=((tempAge[0]+48)*1);
+					//age+=((tempAge[1]+48)*10);
+					//age+=((tempAge[2]+48)*100);
+					age= (int) strtol(tempAge,NULL,10);
+					while(getchar()!='\n');//clean buffer
+				}
+
+				while(getchar()!='\n');//clean buffer
+				printf("\nSSN: ");
+				if(fgets(ssn,10,stdin));
+				
+				while(getchar()!='\n');//clean buffer
+				printf("\nDOB{MM/DD/YYYY}");
+				if(fgets(dateOfBirth,11,stdin));
+				
+				sanitizeInput(firstName,30);
+				sanitizeInput(lastName,30);
+				sanitizeInput(race,30);
+				sanitizeInput(gender,30);
+				sanitizeInput(ssn,10);
+				sanitizeInput(dateOfBirth,11);
+				
+				
+				strncpy(patient->firstName,firstName,30);
+				strncpy(patient->lastName,lastName,30);
+				strncpy(patient->race,race,30);
+				strncpy(patient->gender,gender,30);
+				strncpy(patient->ssn,ssn,10);
+				strncpy(patient->dateOfBirth,dateOfBirth,11);
+				patient->smokes=smokes;
+				patient->age=age;
+				
+				exportUser(patient);
+				printf("\nUPDATED!\n");
+				
+			break;
+			case 9:
+			
+			break;
+			default:
+				break;
+		}
+		
+	}
+}
+	
+
+void exportUser(PatientT * patient) {
+	if(patient == NULL) {
+		//Lol  you boi
+		return;
+	}
+	
+	char * uuid = patient->uuid;
+	
+	char fileName[45];
+	initializeString(fileName, 45);
+	strncat(fileName, "records/", 8);
+	strncat(fileName, uuid, 32);
+	FILE * userRecords = fopen(fileName, "w+");
+	
+	int err;
+	
+	err = fprintf(userRecords, "%s,%s,%d,%s,%s,%d,%s,%s\n", 
+		patient->firstName,
+		patient->lastName,
+		patient->smokes,
+		patient->race,
+		patient->gender,
+		patient->age,
+		patient->ssn,
+		patient->dateOfBirth 
+	);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	err = fprintf(userRecords, "%s,%s\n", 
+		patient->insurance->name,
+		patient->insurance->policyNumber
+	);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	ImmunizationListT * currentImmuList = patient->immunizations;
+	int numRecords = 1;
+	int i = 0;
+	
+	while(currentImmuList->next != NULL) {
+		currentImmuList = currentImmuList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "IMMUNIZATIONS,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentImmuList = patient->immunizations;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%s,%s,%s\n", 
+			currentImmuList->item->name,
+			currentImmuList->item->datePerformed,
+			currentImmuList->item->performingPerson
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentImmuList = currentImmuList->next;
+	}
+	
+	
+	MedicationListT * currentMedList = patient->medications;
+	
+	while(currentMedList->next != NULL) {
+		currentMedList = currentMedList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "MEDICATIONS,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentMedList = patient->medications;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%s,%d,%s\n", 
+			currentMedList->item->name,
+			currentMedList->item->dosage,
+			currentMedList->item->prescribingPerson
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentMedList = currentMedList->next;
+	}
+	
+	
+	VisitListT * currentVisitList = patient->visits;
+	
+	while(currentVisitList->next != NULL) {
+		currentVisitList = currentVisitList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "VISITS,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentVisitList = patient->visits;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%d,%d,%s,%s\n", 
+			currentVisitList->item->heartRate,
+			currentVisitList->item->bloodPressure,
+			currentVisitList->item->visitDateTime,
+			currentVisitList->item->personSeen
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentVisitList = currentVisitList->next;
+	}
+	
+	
+	TestResultListT * currentTestList = patient->testResults;
+	
+	while(currentTestList->next != NULL) {
+		currentTestList = currentTestList->next;
+		numRecords++;
+	}
+	
+	err = fprintf(userRecords, "TESTRESULT,%d\n", numRecords);
+	
+	if(err < 0) {
+		//Error
+	}
+	
+	currentTestList = patient->testResults;
+	
+	for(i = 0; i < numRecords; i++) {
+		err = fprintf(userRecords, "%s,%s\n", 
+			currentTestList->item->testName,
+			currentTestList->item->testResults
+		);
+		
+		if(err < 0) {
+			//Error
+		}
+		
+		currentTestList = currentTestList->next;
+	}
+	
+	fclose(userRecords);
 }
