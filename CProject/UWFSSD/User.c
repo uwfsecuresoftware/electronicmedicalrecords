@@ -794,8 +794,8 @@ void exportShitData(char * uuid) {
 	strncpy(fakePatient->uuid, uuid, 32);
 	fakePatient->smokes = 0;
 	strncpy(fakePatient->race, "RACE", 4);
-	strncpy(fakepatient->gender, "GENDER", 6);
-	patient->age = 1;
+	strncpy(fakePatient->gender, "GENDER", 6);
+	fakePatient->age = 1;
 	strncpy(fakePatient->ssn, "SSN", 3);
 	
 }
