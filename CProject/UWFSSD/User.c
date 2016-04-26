@@ -547,19 +547,21 @@ void editPatient(char* uuid){
 					if(fgets(temp,2,stdin));
 					sanitizeInt(temp,2);
 					smokes=temp[0]-48;
+					while(getchar()!='\n');//clean buffer
 				}
 				
 				printf("\nGENDER: ");
 				if(fgets(gender,30,stdin));
 				
-				printf("\nAGE {000}");
-				if(fgets(tempAge,3,stdin));
-				sanitizeInt(tempAge,4);
-				//age+=((tempAge[0]+48)*1);
-				//age+=((tempAge[1]+48)*10);
-				//age+=((tempAge[2]+48)*100);
-				age= (int) strtol(tempAge,NULL,10);
-				
+				while(age>0&&age<999){
+					printf("\nAGE {000}");
+					if(fgets(tempAge,3,stdin));
+					sanitizeInt(tempAge,4);
+					//age+=((tempAge[0]+48)*1);
+					//age+=((tempAge[1]+48)*10);
+					//age+=((tempAge[2]+48)*100);
+					age= (int) strtol(tempAge,NULL,10);
+				}
 				while(getchar()!='\n');//clean buffer
 				printf("\nSSN: ");
 				if(fgets(ssn,10,stdin));
