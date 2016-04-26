@@ -25,7 +25,8 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
    char uuidBuffer[33];
 
   do{  
-	while(getchar()!='\n');//clean buffer
+	  
+	if(!feof(stdin))while(getchar()!='\n');//clean buffer
     choice =0;
     printf("WELCOME TO THE UWF SSD SECURE MEDICAL RECORDS \n");
     printf("Your Permission Level is: %i\n",level);
