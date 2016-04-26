@@ -555,14 +555,16 @@ void editPatient(char* uuid){
 				printf("\nAGE {000}");
 				if(fgets(tempAge,3,stdin));
 				sanitizeInt(tempAge,4);
-				age+=((tempAge[0]+48)*100);
-				age+=((tempAge[1]+48)*10);
-				age+=((tempAge[2]+48)*1);
+				//age+=((tempAge[0]+48)*1);
+				//age+=((tempAge[1]+48)*10);
+				//age+=((tempAge[2]+48)*100);
+				age= (int) strtol(tempAge,NULL,10);
 				
 				while(getchar()!='\n');//clean buffer
 				printf("\nSSN: ");
 				if(fgets(ssn,10,stdin));
 				
+				while(getchar()!='\n');//clean buffer
 				printf("\nDOB{MM/DD/YYYY}");
 				if(fgets(dateOfBirth,11,stdin));
 				
