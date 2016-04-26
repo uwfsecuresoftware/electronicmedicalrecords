@@ -7,7 +7,7 @@
 typedef int bool;
 
 //---------------------------------------------------------------------
-typedef struct {
+typedef struct VisitT {
 	int heartRate;
 	int bloodPressure;
 	char visitDateTime[20];
@@ -15,38 +15,38 @@ typedef struct {
 	char personSeen[33];
 } VisitT;
 
-typedef struct {
+typedef struct VisitListT {
 	VisitT * item;
 	struct VisitListT * next;
 } VisitListT;
 
 //---------------------------------------------------------------------
 
-typedef struct {
+typedef struct MedicationT {
 	char name[40];
 	int dosage;
 	char prescribingPerson[33];
 } MedicationT;
 
-typedef struct {
+typedef struct MedicationListT {
 	MedicationT * item;
 	struct MedicationListT * next;
 } MedicationListT;
 
-typedef struct {
+typedef struct AllergyListT {
 	MedicationT * item;
 	struct AllergyListT * next;
 } AllergyListT;
 
 //---------------------------------------------------------------------
 
-typedef struct {
+typedef struct ImmunizationT {
 	char name[40];
 	char datePerformed[20];
 	char performingPerson[33];
 } ImmunizationT;
 
-typedef struct {
+typedef struct ImmunizationListT {
 	ImmunizationT * item;
 	struct ImmunizationListT * next;
 } ImmunizationListT;
@@ -60,12 +60,12 @@ typedef struct {
 
 //---------------------------------------------------------------------
 
-typedef struct {
+typedef struct TestResultT {
 	char testName[30];
 	char testResults[120];
 } TestResultT;
 
-typedef struct {
+typedef struct TestResultListT {
 	TestResultT * item;
 	struct TestResultListT *next;
 } TestResultListT;
@@ -73,7 +73,7 @@ typedef struct {
 //---------------------------------------------------------------------
 
 
-typedef struct {
+typedef struct PatientT {
 	//8 + 4 + 4 + 4 + 8 + 1 for null termination 
 	char uuid[33];
 	char firstName[30];
@@ -91,13 +91,14 @@ typedef struct {
 	TestResultListT * testResults;
 } PatientT;
 
-typedef struct {
+typedef struct PatientCacheT {
 	PatientT * item;
 	struct PatientCacheT * next;
 } PatientCacheT;
 
 PatientT * fetchPatient(char * uuid);
 void displayPatient(char *);
+void exportUser(PatientT * patient);
 void editPatient(char *);
 
 #endif

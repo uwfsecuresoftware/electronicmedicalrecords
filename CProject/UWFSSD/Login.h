@@ -14,25 +14,25 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-typedef struct{
+typedef struct LoginT {
     char username[20];
     char password[20];
     int permissionLevel;
     char uuid[33];
     struct LoginT *next;
-}LoginT;
-typedef struct {
+} LoginT;
+typedef struct lockOutT {
     char username[20];
     struct lockOutT *next;
-}lockOutT;
+} lockOutT;
 
 
 struct LoginT* loginMain();
 struct LoginT* loginUser(char* , char*);
-int createUser();
-int deleteUser();
+void createUser();
+void deleteUser();
 void lockout(char*);
-int unlock(char*);
+void unlock(char*);
 int isLocked(char *);
 
 
