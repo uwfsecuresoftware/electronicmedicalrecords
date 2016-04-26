@@ -42,7 +42,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	    //scanf(" %d", &choice);
     	switch(choice){
 	    case 1://View pers rec funct
-			displayPatient(uuid);
+	    displayPatient(uuid);
             break;
             case 2://Edit personal info funct
             break;
