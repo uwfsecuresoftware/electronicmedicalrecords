@@ -72,7 +72,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	    break;
 	    case 2://view update patient records 
                 while(getchar()!='\n');// clean out buffer
-                initializeString(uuidBuffer,33)
+                initializeString(uuidBuffer,33);
                 if(fgets(uuidBuffer,32,stdin)){};
                 sanitizeInput(uuidBuffer, 32);
                 editPatient(uuidBuffer);
