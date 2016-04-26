@@ -26,5 +26,15 @@ void sanitizeSpace(char* input,int size){
         }
         input++;
     }
+}
+
+void sanitizeInt(char* input, int size){
+    int i = 0;
+    for(i = 0;i<size;i++){
+        if(*input -48 >9||input -48<0){
+            *input ='0';
+        }
+        input++;
+    }
     
 }

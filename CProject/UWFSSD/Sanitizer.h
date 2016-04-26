@@ -15,6 +15,7 @@
 #define SANTIZER_H
 void sanitizeInput(char*,int);
 void sanitizeSpace(char*,int);
+void sanitizeInt(char*, int);
 
 
 #ifdef __cplusplus

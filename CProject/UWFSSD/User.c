@@ -458,3 +458,126 @@ void displayTests(TestResultListT * list){
 	}
 	
 }
+void editPatient(char* uuid){
+	//TODO check if uuid is part of DOC's patients
+	PatientT * patient = fetchPatient(uuid);
+	fprintf(stderr, "found patient\n");
+	
+	
+	int choice=0;
+	char temp[2];
+	initializeString(temp,2);
+	//display edit menu
+	while(choice!=9){
+		displayPatient(uuid);
+		printf("****Edit Patient\n");
+		printf("[1] Insurance\n");
+		printf("[2] Add Immunization\n");
+		printf("[3] Add Medication\n");
+		printf("[4] Add Vitals\n");
+		printf("[5] Add Test Results\n");
+		printf("[6] Demographics\n");
+		printf("[9] EXIT\n");
+		//get input
+		if(fgets(temp,2,stdin));
+		choice = temp[0]-48;
+		//process choice
+		switch(choice){
+			case 1:
+				//edit insurance
+				char name[40];
+				char policyNumber[30];	
+				initializeString(name,40);
+				initializeString(policyNumber,40);
+				printf("INSURANCE NAME: ");
+				if(fgets(name,40,stdin));
+				printf("\nPOLICY NO: ");
+				if(fgets(policyNumber,30,stdin));
+				printf("\n");
+				sanitizeInput(name,40);
+				sanitizeInput(policyNumber,30);
+				strncpy(patient->insurance->name,name,40);
+				strncpy(patient->insurance->policyNumber,policyNumber,30);
+				printf("\nUPDATED!\n");
+			break;
+			case 2:
+			break;
+			case 3:
+			break;
+			case 4:
+			break;
+			case 5:
+			break;
+			case 6:
+				
+				char firstName[30];
+				initializeString(firstName,30);
+				char lastName[30];
+				initializeString(lastName,30);
+				bool smokes=0;
+				char race[30];
+				initializeString(race,30);
+				char gender[30];
+				initializeString(gender,30);
+				int age=0;
+				char tempAge[4];
+				initializeString(tempAge,4);
+				char ssn[10];
+				initializeString(ssn,10);
+				
+				printf("FIRSTNAME: ");
+				if(fgets(firstName,30,stdin));
+				printf("\nLASTNAME: ");
+				if(fgets(lastName,30,stdin));
+				
+				while(smokes==0||smokes==1){
+					printf("\nSmoker?{1=YES,0=NO}");
+					if(fgets(temp,2,stdin));
+					sanitizeInt(temp,2);
+					smoker=temp[0]-48;
+				}
+				
+				printf("\nGENDER: ");
+				if(fgets(gender,30,stdin));
+				
+				printf("\nAGE {000}");
+				if(fgets(tempAge,3,stdin));
+				sanitizeInt(tempAge,4);
+				age+=((tempAge[0]-48)*100);
+				age+=((tempAge[1]-48)*10);
+				age+=((tempAge[2]-48)*1);
+				
+				printf("\nSSN: ");
+				if(fgets(ssn,10,stdin));
+				
+				sanitizeInput(firstName,30);
+				sanitizeInput(lastName,30);
+				sanitizeInput(race,30);
+				sanitizeInput(gender,30);
+				sanitizeInput(ssn,10);
+				
+				
+				strncpy(patient->firstName,firstName,30);
+				strncpy(patient->lastName,lastName,30);
+				strncpy(patient->race,race,30);
+				strncpy(patient->gender,gender,30);
+				strncpy(patient->ssn,ssn,10);
+				patient->smokes=smokes;
+				patient->age=age;
+				
+				printf("\nUPDATED!\n");
+				
+			break;
+			case 9:
+			//rewrite to file
+			//free memory!!!!!!
+			break;
+		}
+		
+	}
+	
+
+	
+	
+	
+}
