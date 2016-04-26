@@ -317,7 +317,7 @@ int isLocked(char* user) {
 //prompts and deletes user
 
 int deleteUser() {
-    /*FILE *logins = fopen("logins", "r");
+    FILE *logins = fopen("logins", "r");
     LoginT *head = malloc(sizeof (LoginT));
     LoginT *temp = malloc(sizeof (LoginT));
     LoginT *newElement = malloc(sizeof (LoginT));
@@ -424,6 +424,5 @@ int deleteUser() {
             temp = temp->next;
         }
     }
-    fclose(logins);*/
-	printf("IS NOT IMPLEMENTED");
+    fclose(logins);
 }
