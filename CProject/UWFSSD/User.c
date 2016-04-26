@@ -473,7 +473,7 @@ void editPatient(char* uuid){
 	//display edit menu
 	while(choice!=9){
 		displayPatient(uuid);
-		printf("****Edit Patient\n");
+		printf("\n****Edit Patient\n");
 		printf("[1] Insurance\n");
 		printf("[2] Add Immunization\n");
 		printf("[3] Add Medication\n");
@@ -488,6 +488,7 @@ void editPatient(char* uuid){
 		switch(choice){
 			case 1:
 			;
+			while(getchar()!='\n');//clean buffer
 				//edit insurance
 				char name[40];
 				char policyNumber[30];	
@@ -515,7 +516,7 @@ void editPatient(char* uuid){
 			break;
 			case 6:
 			;
-				
+				while(getchar()!='\n');//clean buffer
 				char firstName[30];
 				initializeString(firstName,30);
 				char lastName[30];
