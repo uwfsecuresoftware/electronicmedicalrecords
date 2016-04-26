@@ -534,6 +534,8 @@ void editPatient(char* uuid){
 				initializeString(tempAge,4);
 				char ssn[10];
 				initializeString(ssn,10);
+				char dateOfBirth[11];
+				initializeString(dateOfBirth,11);
 				
 				printf("FIRSTNAME: ");
 				if(fgets(firstName,30,stdin));
@@ -553,18 +555,23 @@ void editPatient(char* uuid){
 				printf("\nAGE {000}");
 				if(fgets(tempAge,3,stdin));
 				sanitizeInt(tempAge,4);
-				age+=((tempAge[0]-48)*100);
-				age+=((tempAge[1]-48)*10);
-				age+=((tempAge[2]-48)*1);
+				age+=((tempAge[0]+48)*100);
+				age+=((tempAge[1]+48)*10);
+				age+=((tempAge[2]+48)*1);
 				
+				while(getchar()!='\n');//clean buffer
 				printf("\nSSN: ");
 				if(fgets(ssn,10,stdin));
+				
+				printf("\nDOB{MM/DD/YYYY}");
+				if(fgets(dateOfBirth,11,stdin));
 				
 				sanitizeInput(firstName,30);
 				sanitizeInput(lastName,30);
 				sanitizeInput(race,30);
 				sanitizeInput(gender,30);
 				sanitizeInput(ssn,10);
+				sanitizeInput(dateOfBirth,11);
 				
 				
 				strncpy(patient->firstName,firstName,30);
@@ -572,6 +579,7 @@ void editPatient(char* uuid){
 				strncpy(patient->race,race,30);
 				strncpy(patient->gender,gender,30);
 				strncpy(patient->ssn,ssn,10);
+				strncpy(patient->dateOfBirth,dateOfBirth,11);
 				patient->smokes=smokes;
 				patient->age=age;
 				
