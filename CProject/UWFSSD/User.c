@@ -12,6 +12,7 @@ void displayImmu(ImmunizationListT * list);
 void displayMed(MedicationListT * list);
 void displayVisits(VisitListT * list);
 void displayTests(TestResultListT * list);
+void initializePatient(PatientT * patient);
 
 PatientT * fetchPatient(char * uuid) {
 
