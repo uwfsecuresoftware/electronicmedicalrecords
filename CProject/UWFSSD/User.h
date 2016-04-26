@@ -99,5 +99,6 @@ typedef struct PatientCacheT {
 PatientT * fetchPatient(char * uuid);
 void displayPatient(char *);
 void exportUser(PatientT * patient);
+void editPatient(char *);
 
 #endif
