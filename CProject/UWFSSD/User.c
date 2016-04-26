@@ -579,6 +579,7 @@ void editPatient(char* uuid){
 		}
 		
 	}
+}
 	
 
 void exportUser(PatientT * patient) {
