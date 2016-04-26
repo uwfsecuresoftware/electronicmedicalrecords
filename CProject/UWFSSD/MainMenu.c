@@ -18,6 +18,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
    int choice =0;
    char temp[2];
    char usernameBuffer[20];
+   char uuidBuffer[33];
 
   do{  
     choice =0;
@@ -55,7 +56,7 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
     	}	
     }else if(level ==2){//nurse
         printf("[1] View Patient records\n");
-	printf("[2] Update Patient records \n");
+	    printf("[2] Update Patient records \n");
         printf("[3] Record vitals\n"); 
         printf("[9] Exit menu \n");
 	if(fgets( temp,2,stdin) == NULL){};
@@ -66,6 +67,11 @@ void displayMainMenu(int level, int remind,char* username, char* uuid){
 	    case 1://View patients info
 	    break;
 	    case 2://view update patient records 
+                while(getchar()!='\n');// clean out buffer
+                if(initializeString(uuidBuffer,33)){};
+                if(fgets(uuidBuffer,20,stdin)){};
+                if(sanitizeInput(uuidBuffer)){};
+                editPatient(uuidBuffer);
 	    break;
 	    case 3://Record vitals funct
 	    break;
