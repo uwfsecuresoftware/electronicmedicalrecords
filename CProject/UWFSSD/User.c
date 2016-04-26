@@ -40,6 +40,9 @@ PatientT * fetchPatient(char * uuid) {
 		if(strncmp(currentRecord->item->uuid, uuid, 33)) {
 			return currentRecord->item;
 		}
+		else {
+			currentRecord = currentRecord->next;
+		}
 	}
 	//No record :c
 	fprintf(stderr,"NO RECORD SEARCHING FILE\n");
